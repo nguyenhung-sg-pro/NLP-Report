@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-REWARDBENCH - Evaluating Reward Models in Multilingual Settings</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary-navy: #1e3a8a;
+            --secondary-blue: #2563eb;
+            --accent-light: #dbeafe;
+            --text-dark: #0f172a;
+            --text-slate: #475569;
+            --bg-canvas: #ffffff;
+            --slide-bg: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-canvas);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            color: #0f172a;
+        }
+
+        .presentation-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .viewport {
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: var(--bg-canvas);
+            padding: 20px;
+        }
+
+        .slide-frame {
+            width: 1280px;
+            height: 720px;
+            background-color: var(--slide-bg);
+            color: var(--text-dark);
+            box-shadow: none;
+            border-radius: 12px;
+            position: relative;
+            display: none;
+            overflow: hidden;
+            transform-origin: center center;
+        }
+
+        .slide-frame.active {
+            display: flex;
+        }
+
+        .slide-layout-split {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide-left-panel {
+            width: 65%;
+            height: 100%;
+            padding: 50px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
+        .slide-right-panel {
+            width: 35%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom right, #1e3a8a, #1e40af, #2563eb);
+            overflow: hidden;
+        }
+
+        .slide-standard {
+            width: 100%;
+            height: 100%;
+            padding: 50px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-image: radial-gradient(#e2e8f0 1.2px, transparent 1.2px);
+            background-size: 30px 30px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+            margin-bottom: 16px;
+            width: max-content;
+        }
+
+        .badge-amber {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .badge-emerald {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .badge-purple {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+            border: 1px solid #d8b4fe;
+        }
+
+        .slide-header {
+            margin-bottom: 24px;
+        }
+
+        .slide-title {
+            font-family: 'Merriweather', serif;
+            font-size: 36px;
+            font-weight: 900;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .slide-subtitle {
+            font-size: 15px;
+            color: #2563eb;
+            font-weight: 600;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-neutral {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .card-neutral:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-highlight {
+            border-left: 4px solid #2563eb;
+        }
+
+        .card-alert {
+            border-left: 4px solid #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            right: 80px;
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .btn-control {
+            background-color: rgba(30, 41, 59, 0.9);
+            color: #f8fafc;
+            border: 1px solid #475569;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .btn-control:hover {
+            background-color: var(--secondary-blue);
+            border-color: var(--secondary-blue);
+        }
+
+        .slide-footer-overlay {
+            position: absolute;
+            bottom: 24px;
+            left: 80px;
+            right: 330px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 500;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 12px;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        .circle-1 {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border: 2px solid rgba(96, 165, 250, 0.15);
+            border-radius: 50%;
+            right: -300px;
+            top: 50px;
+        }
+
+        .circle-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border: 15px solid rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            right: -200px;
+            bottom: -100px;
+        }
+
+        .circle-3 {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background-color: rgba(59, 130, 246, 0.05);
+            border-radius: 50%;
+            top: 80px;
+            left: 40px;
+            filter: blur(24px);
+        }
+
+        .image-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e2e8f0;
+            background-color: white;
+        }
+
+        /* =========================================
+           USER REQUESTED ADJUSTMENTS
+           ========================================= */
+
+        /* 1. Reduce header and adjust container paddings to create more whitespace */
+        .slide-standard {
+            padding: 15px 60px 10px !important;
+        }
+
+        .slide-left-panel {
+            padding: 20px 60px !important;
+        }
+
+        .slide-header {
+            margin-bottom: 8px !important;
+        }
+
+        .slide-title {
+            font-size: 28px !important;
+            line-height: 1.2 !important;
+        }
+
+        .slide-subtitle {
+            font-size: 14px !important;
+            margin-top: 2px !important;
+        }
+
+        .badge {
+            padding: 4px 10px !important;
+            margin-bottom: 6px !important;
+            font-size: 12px !important;
+        }
+
+        /* 2. Re-adjust text sizes to prevent overflow but maintain readability */
+        p,
+        li,
+        .text-sm,
+        .text-\[13px\],
+        .text-\[13\.5px\],
+        .text-\[14px\] {
+            font-size: 14px !important;
+            line-height: 1.45 !important;
+        }
+
+        .text-xs,
+        .text-\[12px\],
+        .text-\[11px\] {
+            font-size: 12.5px !important;
+            line-height: 1.4 !important;
+        }
+
+        .card-neutral {
+            padding: 10px 14px !important;
+        }
+
+        .card-neutral h3,
+        .slide-left-panel h3,
+        .slide-right-panel h3 {
+            font-size: 15.5px !important;
+            margin-bottom: 4px !important;
+        }
+
+        /* 3. Tightly pack components vertically to avoid pushing text out of frame */
+        .gap-6 {
+            gap: 12px !important;
+        }
+
+        .gap-8 {
+            gap: 16px !important;
+        }
+
+        .pb-8,
+        .pb-12 {
+            padding-bottom: 0px !important;
+        }
+
+        .mb-6 {
+            margin-bottom: 12px !important;
+        }
+
+        .mb-8 {
+            margin-bottom: 12px !important;
+        }
+
+        .mt-4 {
+            margin-top: 4px !important;
+        }
+
+        .space-y-2> :not([hidden])~ :not([hidden]) {
+            margin-top: 6px !important;
+        }
+
+        /* Compress list items */
+
+        /* Slide 1 adjustments */
+        .slide-left-panel h1 {
+            font-size: 42px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .slide-left-panel h2 {
+            font-size: 20px !important;
+            margin-bottom: 12px !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="presentation-container">
+
+        <div class="viewport" id="viewport">
+
+            <div class="slide-footer-overlay" id="global-footer">
+                <div class="flex flex-col">
+                    <span class="tracking-wide font-semibold text-slate-600">Môn học: Chuyên đề nghiên cứu và ứng dụng
+                        về Xử lý ngôn ngữ tự nhiên</span>
+                    <span class="tracking-wide text-slate-500">Giảng Viên - Nguyễn Văn Kiệt</span>
+                </div>
+                <span class="font-semibold tracking-wider text-slate-500" id="slide-counter">Trang 1 / 25</span>
+            </div>
+
+            <!-- SLIDE 1: Title -->
+            <div class="slide-frame active" id="slide-1">
+                <div class="slide-layout-split">
+                    <div class="slide-left-panel">
+                        <div class="mb-6">
+                            <h3 class="text-[13px] font-bold text-blue-800 uppercase mb-1">Môn học: Chuyên đề nghiên cứu và ứng dụng về Xử lý ngôn ngữ tự nhiên</h3>
+                        </div>
+
+                        <div class="badge">
+                            <i class="fa-solid fa-book-journal-whills mr-2"></i>Bài báo xuất bản tại ACL 2025
+                        </div>
+                        <h1 class="main-title text-4xl font-extrabold font-serif mb-3 text-slate-900">M-REWARDBENCH</h1>
+                        <h2 class="sub-title text-xl text-blue-700 font-semibold mb-6">Evaluating Reward Models in
+                            Multilingual Settings</h2>
+
+                        <div class="grid grid-cols-2 gap-6 mt-2">
+                            <div>
+                                <p class="text-[11px] font-bold text-slate-500 tracking-wide uppercase mb-2"><i
+                                        class="fa-solid fa-feather-pointed mr-1"></i> Nhóm tác giả bài báo</p>
+                                <p class="text-[12px] text-slate-600 font-medium leading-relaxed">
+                                    Srishti Gureja, Lester James V. Miranda, Shayekh Bin Islam, Rishabh Maheshwary, Drishti
+                                    Sharma, Gusti Winata, Nathan Lambert, Sebastian Ruder, Sara Hooker, Marzieh Fadaee
+                                </p>
+                            </div>
+                            <div class="border-l-2 border-slate-200 pl-5">
+                                <p class="text-[11px] font-bold text-slate-500 tracking-wide uppercase mb-2"><i 
+                                        class="fa-solid fa-users mr-1"></i> Thông tin báo cáo</p>
+                                <div class="text-[12px] text-slate-600 font-medium leading-relaxed space-y-2">
+                                    <p><strong>Giảng viên:</strong> Nguyễn Văn Kiệt</p>
+                                    <div>
+                                        <strong>Học viên:</strong>
+                                        <ul class="ml-4 mt-1 space-y-1 list-disc text-slate-500 font-semibold">
+                                            <li>Nguyễn Văn Hưng</li>
+                                            <li>Bùi Đức Vũ</li>
+                                            <li>Nguyễn Văn Dư</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slide-right-panel">
+                        <div class="circle-1"></div>
+                        <div class="circle-2"></div>
+                        <div class="circle-3"></div>
+
+                        <div
+                            class="logo-circle w-48 h-48 bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-white/20 p-2 mb-6 z-10 overflow-hidden">
+                            <img src="Logo ĐH Công Nghệ Thông Tin - UIT.png" alt="UIT Logo" class="w-full h-full object-contain">
+                        </div>
+                        <div class="univ-text-top text-blue-300 font-bold uppercase tracking-wider text-[12px] mb-2 z-10 text-center">
+                            ĐH Quốc Gia Thành Phố Hồ Chí Minh</div>
+                        <div class="univ-text-bottom text-white font-bold text-[17px] text-center z-10 uppercase">Trường Đại Học CNTT</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: Abstract -->
+            <div class="slide-frame" id="slide-2">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge"><i class="fa-solid fa-compass mr-2"></i>Abstract</div>
+                        <h1 class="slide-title">Tóm tắt (Abstract)</h1>
+                        <p class="slide-subtitle">Tổng quan về nghiên cứu và những phát hiện chính</p>
+                    </div>
+                    <div class="flex flex-col gap-4 flex-grow">
+                        <!-- Row 1: 2 columns -->
+                        <div class="grid grid-cols-2 gap-4 flex-1">
+                            <div class="card-neutral card-alert flex flex-col justify-center">
+                                <h3 class="font-bold text-lg text-red-700 mb-2"><i
+                                        class="fa-solid fa-circle-exclamation mr-2"></i>Vấn đề</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    Các mô hình phần thưởng (Reward Models - RMs) đóng vai trò then chốt trong việc tích
+                                    hợp phản hồi của con người vào quá trình tạo văn bản của LLMs. Tuy nhiên, chúng hiện
+                                    <strong>chủ yếu được huấn luyện và đánh giá bằng tiếng Anh</strong>. Năng lực của
+                                    chúng trong môi trường đa ngôn ngữ phần lớn chưa được nghiên cứu rõ ràng.
+                                </p>
+                            </div>
+                            <div class="card-neutral card-highlight flex flex-col justify-center">
+                                <h3 class="font-bold text-lg text-blue-800 mb-2"><i
+                                        class="fa-solid fa-lightbulb mr-2"></i>Đóng góp</h3>
+                                <p class="text-slate-600 text-sm leading-relaxed">
+                                    Nghiên cứu giới thiệu <strong>M-REWARDBENCH</strong>, bộ benchmark đánh giá RM đa
+                                    ngôn ngữ đầu tiên. Bao gồm <strong>2.87k mẫu ưu tiên trên 23 ngôn ngữ đa
+                                        dạng</strong>. Benchmark này kiểm tra khả năng hội thoại (chat), an toàn
+                                    (safety), lập luận (reasoning) và dịch thuật (translation).
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Row 2: Full width -->
+                        <div class="card-neutral border-l-4 border-emerald-500 flex-1 flex flex-col justify-center">
+                            <h3 class="font-bold text-lg text-emerald-800 mb-2"><i
+                                    class="fa-solid fa-square-poll-horizontal mr-2"></i>Phát hiện thực nghiệm</h3>
+                            <ul class="list-disc pl-5 text-slate-600 text-sm leading-relaxed space-y-1">
+                                <li>Phát hiện khoảng cách đáng kể trong hiệu suất của RMs giữa tiếng Anh và các ngôn ngữ
+                                    khác.</li>
+                                <li>Sự ưu tiên (preferences) của RMs có thể thay đổi đáng kể khi chuyển đổi giữa các
+                                    ngôn ngữ.</li>
+                                <li>Chất lượng dịch thuật càng cao, hiệu suất của RM càng được cải thiện.</li>
+                                <li>RMs hoạt động tốt hơn đáng kể đối với các ngôn ngữ giàu tài nguyên (high-resource
+                                    languages).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Introduction -->
+            <div class="slide-frame" id="slide-3">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge"><i class="fa-solid fa-book-open mr-2"></i>1. Introduction</div>
+                        <h1 class="slide-title">1. Giới thiệu</h1>
+                        <p class="slide-subtitle">Tầm quan trọng của đánh giá đa ngôn ngữ</p>
+                    </div>
+                    <div class="flex flex-col gap-4 flex-grow">
+                        <div class="grid grid-cols-2 gap-4 flex-1">
+                            <div class="card-neutral card-highlight flex flex-col justify-center">
+                                <h3 class="font-bold text-slate-800 mb-2"><i
+                                        class="fa-solid fa-crosshairs text-blue-500 mr-2"></i>Vai trò của Reward Models
+                                    (RMs)</h3>
+                                <p class="text-[13px] text-slate-600">
+                                    RMs đóng vai trò trung tâm trong việc căn chỉnh các LLM hiện đại với ưu tiên của con
+                                    người <em>(thông qua RLHF)</em>. Chúng đóng vai trò như một "oracle" phản ánh các
+                                    giá trị mong muốn, giúp định hướng LLMs về độ an toàn, lập luận và khả năng tuân thủ
+                                    chỉ thị.
+                                </p>
+                            </div>
+                            <div class="card-neutral card-alert flex flex-col justify-center">
+                                <h3 class="font-bold text-slate-800 mb-2"><i
+                                        class="fa-solid fa-triangle-exclamation text-red-500 mr-2"></i>Thực trạng hiện
+                                    tại</h3>
+                                <p class="text-[13px] text-slate-600">
+                                    Bất chấp việc LLMs được triển khai trên toàn cầu, các RM chủ yếu được đánh giá ở các
+                                    ngôn ngữ giàu tài nguyên như tiếng Anh <span class="font-medium text-blue-600">(ví
+                                        dụ: RewardBench - Lambert et al., 2024)</span>. Việc đánh giá sự nhạy bén văn
+                                    hóa hoặc khả năng đa ngôn ngữ của RM vẫn còn bị bỏ ngỏ, gây rủi ro về độ thiên lệch.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 flex flex-col justify-center">
+                            <h3 class="text-[16px] font-bold text-slate-800 mb-3 text-center uppercase tracking-wide">3
+                                Đóng góp học thuật cốt lõi</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div
+                                    class="bg-blue-50 border border-blue-200 rounded-xl p-4 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
+                                    <div
+                                        class="w-10 h-10 bg-white shadow-sm text-blue-600 rounded-full flex items-center justify-center text-xl mb-2 border border-blue-100">
+                                        <i class="fa-solid fa-database"></i>
+                                    </div>
+                                    <h4 class="font-bold text-blue-900 text-[15px] mb-1">Đóng góp Dữ liệu</h4>
+                                    <p class="text-[13px] text-slate-700 leading-snug">Xây dựng bộ benchmark
+                                        <strong>M-REWARDBENCH</strong> quy mô lớn cho 23 ngôn ngữ bao quát 5 nhóm tác
+                                        vụ.
+                                    </p>
+                                </div>
+                                <div
+                                    class="bg-purple-50 border border-purple-200 rounded-xl p-4 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
+                                    <div
+                                        class="w-10 h-10 bg-white shadow-sm text-purple-600 rounded-full flex items-center justify-center text-xl mb-2 border border-purple-100">
+                                        <i class="fa-solid fa-scale-balanced"></i>
+                                    </div>
+                                    <h4 class="font-bold text-purple-900 text-[15px] mb-1">Đóng góp Đo lường</h4>
+                                    <p class="text-[13px] text-slate-700 leading-snug">Đo lường toàn diện các RMs tiên
+                                        tiến, chỉ ra sụt giảm hiệu suất nghiêm trọng (lên đến 13%) ở môi trường đa ngôn
+                                        ngữ.</p>
+                                </div>
+                                <div
+                                    class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
+                                    <div
+                                        class="w-10 h-10 bg-white shadow-sm text-emerald-600 rounded-full flex items-center justify-center text-xl mb-2 border border-emerald-100">
+                                        <i class="fa-solid fa-microscope"></i>
+                                    </div>
+                                    <h4 class="font-bold text-emerald-900 text-[15px] mb-1">Đóng góp Phân tích</h4>
+                                    <p class="text-[13px] text-slate-700 leading-snug">Phân tích chuyên sâu về độ bền
+                                        vững của RM dưới tác động của chất lượng dịch thuật, đặc trưng văn tự và ngữ hệ.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Figure 1 -->
+            <div class="slide-frame" id="slide-4">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge"><i class="fa-solid fa-chart-line mr-2"></i>1. Introduction</div>
+                        <h1 class="slide-title">Sự sụt giảm hiệu năng trên đa ngôn ngữ</h1>
+                        <p class="slide-subtitle">Khoảng cách giữa Tiếng Anh và các ngôn ngữ khác</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="Figure 1.PNG"
+                            alt="Figure 1: Performance gap between RewardBench (English) and M-REWARDBENCH">
+                    </div>
+                    <p class="text-xs text-center text-slate-500 mt-2"><strong>Hình 1:</strong> Hiệu suất của các mô
+                        hình trên RewardBench (Tiếng Anh) so với điểm trung bình trên M-REWARDBENCH (23 ngôn ngữ). Tất
+                        cả các mô hình đều hoạt động kém hơn trong môi trường đa ngôn ngữ (nằm dưới đường chéo).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Reward Modelling -->
+            <div class="slide-frame" id="slide-5">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge"><i class="fa-solid fa-gears mr-2"></i>2. Reward Modelling</div>
+                        <h1 class="slide-title">2. Reward Modelling</h1>
+                        <p class="slide-subtitle">Học ưu tiên (Preference Learning) và Mô hình phần thưởng</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 flex-grow mt-2">
+                        <div class="card-neutral flex flex-col justify-center">
+                            <h3 class="font-bold text-slate-800 mb-3"><i
+                                    class="fa-solid fa-graduation-cap text-blue-500 mr-2"></i>Học ưu tiên (Preference
+                                Learning)</h3>
+                            <ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
+                                <li><strong>Định nghĩa:</strong> Tinh chỉnh LLM dựa trên phản hồi của con người. Nền
+                                    tảng là <span class="font-semibold text-slate-700">Bradley-Terry model</span> - mô
+                                    hình toán học giải thích đơn giản rằng: <em>Xác suất con người thích câu A hơn câu B
+                                        tỉ lệ thuận với độ chênh lệch điểm phần thưởng giữa A và B</em> (A điểm càng cao
+                                    hơn B, xác suất A thắng càng lớn).</li>
+                                <li><strong>Tại sao sử dụng?:</strong> Giúp LLM vượt qua hạn chế của việc chỉ học ngôn
+                                    ngữ đơn thuần, tiến tới việc <strong>hiểu và tuân theo</strong> các chỉ thị phức
+                                    tạp, an toàn và chính xác hơn.</li>
+                            </ul>
+                        </div>
+                        <div class="card-neutral flex flex-col justify-center">
+                            <h3 class="font-bold text-slate-800 mb-3"><i
+                                    class="fa-solid fa-layer-group text-indigo-500 mr-2"></i>Các loại Reward Models
+                                (RMs)</h3>
+                            <ul class="list-disc pl-5 text-[13px] text-slate-600 space-y-2">
+                                <li><strong>Classifier RMs:</strong> Thay thế lớp đầu ra của LLM bằng một đầu hồi quy
+                                    (regression head) để dự đoán điểm phần thưởng vô hướng. <br><em
+                                        class="text-indigo-600 text-[12px]"><i
+                                            class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i>VD: PPO
+                                        (Proximal Policy Optimization)</em></li>
+                                <li><strong>Implicit RMs:</strong> Không sử dụng RM riêng biệt; tối ưu trực tiếp LLM dựa
+                                    trên hàm loss. <br><em class="text-emerald-600 text-[12px]"><i
+                                            class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i>VD: DPO
+                                        (Rafailov et al., 2024)</em></li>
+                                <li><strong>Generative RMs:</strong> Sử dụng LLM mạnh đóng vai trò giám khảo để đưa ra
+                                    đánh giá dạng văn bản. <br><em class="text-orange-600 text-[12px]"><i
+                                            class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i>Kỹ
+                                        thuật: LLM-as-a-judge (Zheng et al., 2024)</em></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: Sơ đồ hoạt động RMs -->
+            <div class="slide-frame" id="slide-new-6">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge"><i class="fa-solid fa-project-diagram mr-2"></i>2. Reward Modelling</div>
+                        <h1 class="slide-title">Sơ đồ hoạt động RMs</h1>
+                        <p class="slide-subtitle">Chi tiết quá trình phân tích và đánh giá của 3 loại Reward Models</p>
+                    </div>
+                    <div class="flex flex-col gap-4 flex-grow justify-center pb-2">
+                        <!-- Row 1: Classifier RM -->
+                        <div
+                            class="bg-white border-l-4 border-indigo-500 rounded-xl p-4 shadow-sm flex items-center gap-6">
+                            <div class="w-1/4">
+                                <h4 class="font-bold text-indigo-800 text-lg"><i
+                                        class="fa-solid fa-layer-group text-indigo-500 mr-2"></i>Classifier RMs</h4>
+                                <p class="text-sm text-slate-600 mt-1 leading-tight">Dùng regression head. Ứng dụng:
+                                    RLHF, PPO.</p>
+                                <p class="text-xs text-indigo-500 font-mono mt-1">[Ouyang et al., 2022]</p>
+                            </div>
+                            <div class="flex-grow flex items-center justify-between text-base">
+                                <div class="text-center">
+                                    <div
+                                        class="border border-indigo-300 bg-white px-3 py-2 rounded shadow-sm font-mono text-sm">
+                                        Prompt(x)<br>+ Resp(y)</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Đầu vào</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-indigo-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-indigo-300 bg-indigo-50 px-3 py-2 rounded font-bold shadow-sm">
+                                        Encoder</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Mô hình nền</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-indigo-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-indigo-300 bg-white px-3 py-2 rounded shadow-sm font-mono text-sm">
+                                        h<sub>T</sub></div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Trạng thái ẩn</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-indigo-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-indigo-500 bg-indigo-500 text-white px-3 py-2 rounded font-bold shadow-sm text-sm">
+                                        Linear W</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Lớp hồi quy</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-indigo-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-indigo-400 bg-indigo-100 px-4 py-2 rounded font-bold text-indigo-900 shadow-sm text-sm border-dashed">
+                                        r = W<sup>T</sup>h<sub>T</sub></div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Điểm số (Reward)</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: Implicit RM -->
+                        <div
+                            class="bg-white border-l-4 border-emerald-500 rounded-xl p-4 shadow-sm flex items-center gap-6">
+                            <div class="w-1/4">
+                                <h4 class="font-bold text-emerald-800 text-lg"><i
+                                        class="fa-solid fa-ghost text-emerald-500 mr-2"></i>Implicit RMs</h4>
+                                <p class="text-sm text-slate-600 mt-1 leading-tight">Tối ưu trực tiếp LLM từ Pairs. Ứng
+                                    dụng: DPO.</p>
+                                <p class="text-xs text-emerald-500 font-mono mt-1">[Rafailov et al., 2023]</p>
+                            </div>
+                            <div class="flex-grow flex items-center justify-between text-base">
+                                <div class="text-center">
+                                    <div
+                                        class="border border-emerald-300 bg-white px-3 py-2 rounded shadow-sm font-mono text-sm">
+                                        (x, y<sub>c</sub>, y<sub>r</sub>)</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Cặp dữ liệu</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-emerald-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-emerald-300 bg-emerald-50 px-3 py-2 rounded font-bold shadow-sm">
+                                        &pi;<sub>&theta;</sub> &amp; &pi;<sub>ref</sub></div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Mô hình &amp; Tham chiếu</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-emerald-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-emerald-500 bg-emerald-500 text-white px-3 py-2 rounded font-bold shadow-sm text-sm">
+                                        L<sub>DPO</sub></div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Hàm Loss DPO</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-emerald-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-emerald-400 bg-emerald-100 px-4 py-2 rounded font-bold text-emerald-900 shadow-sm text-sm border-dashed">
+                                        &Delta;&theta; Update</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Cập nhật trọng số</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Generative RM -->
+                        <div
+                            class="bg-white border-l-4 border-orange-500 rounded-xl p-4 shadow-sm flex items-center gap-6">
+                            <div class="w-1/4">
+                                <h4 class="font-bold text-orange-800 text-lg"><i
+                                        class="fa-solid fa-robot text-orange-500 mr-2"></i>Generative RMs</h4>
+                                <p class="text-sm text-slate-600 mt-1 leading-tight">Prompt LLM khác chấm điểm.
+                                    LLM-as-a-judge.</p>
+                                <p class="text-xs text-orange-500 font-mono mt-1">[Zheng et al., 2023]</p>
+                            </div>
+                            <div class="flex-grow flex items-center justify-between text-base">
+                                <div class="text-center">
+                                    <div
+                                        class="border border-orange-300 bg-white px-3 py-2 rounded shadow-sm font-mono text-sm">
+                                        Prompt + (x, y)</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Đầu vào</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-orange-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-orange-500 bg-orange-500 text-white px-3 py-2 rounded font-bold shadow-sm">
+                                        GPT-4/Llama</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Giám khảo LLM</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-orange-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-orange-300 bg-orange-50 px-3 py-2 rounded font-bold shadow-sm italic text-orange-800 text-sm">
+                                        "A tốt hơn..."</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Đánh giá văn bản</div>
+                                </div>
+                                <div><i class="fa-solid fa-arrow-right text-orange-300"></i></div>
+                                <div class="text-center">
+                                    <div
+                                        class="border border-orange-400 bg-orange-100 px-4 py-2 rounded font-bold text-orange-900 shadow-sm text-sm border-dashed">
+                                        Score/WinRate</div>
+                                    <div class="text-[10px] text-slate-500 mt-1 uppercase font-semibold tracking-wider">
+                                        Trích xuất kết quả</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Phương thức Đánh giá -->
+                        <div
+                            class="bg-gradient-to-r from-slate-50 to-white border border-slate-200 rounded-lg p-3 flex items-center shadow-sm justify-center gap-4 mt-2">
+                            <div class="text-3xl text-slate-300"><i class="fa-solid fa-clipboard-check"></i></div>
+                            <div>
+                                <p class="text-[14px] text-slate-600 leading-relaxed">
+                                    <b>Đo lường bằng độ chính xác (Accuracy):</b> Với mỗi bộ ba
+                                    <code>&lang;prompt, chosen, rejected&rang;</code>, RM dự đoán đúng (positive
+                                    classification) nếu gán điểm cho câu được con người chọn cao hơn câu bị loại: <span
+                                        class="font-mono text-purple-700 bg-purple-50 px-2 py-0.5 rounded font-bold">r(x,
+                                        y<sub>c</sub>) > r(x, y<sub>r</sub>)</span>. Điểm tổng thể (Overall Score) trên
+                                    mỗi ngôn ngữ là <strong>trung bình có trọng số</strong> (weighted average) của tất
+                                    cả các danh mục.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: M-REWARDBENCH Overview -->
+            <div class="slide-frame" id="slide-6">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-amber"><i class="fa-solid fa-earth-americas mr-2"></i>3. M-REWARDBENCH
+                        </div>
+                        <h1 class="slide-title">3. M-REWARDBENCH</h1>
+                        <p class="slide-subtitle">Benchmark đánh giá RMs đa ngôn ngữ đầu tiên</p>
+                    </div>
+                    <div class="flex flex-col flex-grow justify-center items-center gap-5">
+                        <!-- Triết lý thiết kế -->
+                        <div
+                            class="w-full bg-gradient-to-r from-amber-50 via-white to-amber-50 border border-amber-200 rounded-lg p-4 text-center shadow-sm">
+                            <h3 class="font-bold text-slate-800 text-[15px] mb-1"><i
+                                    class="fa-solid fa-lightbulb text-amber-500 mr-2"></i>Triết lý thiết kế</h3>
+                            <p class="text-[13.5px] text-slate-600">
+                                Xây dựng một benchmark không chỉ đánh giá <strong>năng lực tổng quát</strong> trên từng
+                                ngôn ngữ đơn lẻ, mà còn đo lường hiệu suất trên các tác vụ đòi hỏi <strong>kiến thức đa
+                                    ngôn ngữ</strong> chuyên sâu.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6 w-full">
+                            <!-- Khối 1: Năng lực tổng quát -->
+                            <div
+                                class="bg-white border border-slate-200 border-t-4 border-t-blue-600 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+                                <h3 class="font-bold text-slate-800 text-[15px] mb-3 flex items-center">
+                                    <span
+                                        class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center mr-3"><i
+                                            class="fa-solid fa-layer-group"></i></span>
+                                    General Purpose(Khả năng đa mục đích)
+                                </h3>
+                                <p class="text-[13px] text-slate-600 mb-4 leading-relaxed">
+                                    Đánh giá toàn diện trên 4 phương diện cốt lõi: <strong>Chat, Chat-Hard, Safety,
+                                        Reasoning</strong>.
+                                </p>
+                                <div
+                                    class="bg-blue-50/50 border border-blue-100 rounded-lg p-3 text-[13px] text-slate-700 flex-grow mt-auto">
+                                    <ul class="list-disc pl-4 space-y-2">
+                                        <li><strong>Nguồn gốc:</strong> Chuyển ngữ từ RewardBench (tiếng Anh) sang 23
+                                            ngôn ngữ mục tiêu thông qua Google Translate API.</li>
+                                        <li><strong>Kiểm định:</strong> Áp dụng quy trình đánh giá thủ công (Human
+                                            Evaluation) khắt khe nhằm loại bỏ các khái niệm đặc thù văn hóa
+                                            (English-specific concepts) và lỗi dịch thuật.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Khối 2: Năng lực dịch thuật -->
+                            <div
+                                class="bg-white border border-slate-200 border-t-4 border-t-orange-500 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+                                <h3 class="font-bold text-slate-800 text-[15px] mb-3 flex items-center">
+                                    <span
+                                        class="w-8 h-8 rounded bg-orange-100 text-orange-600 flex items-center justify-center mr-3"><i
+                                            class="fa-solid fa-language"></i></span>
+                                    Khả năng dịch thuật(Translation)
+                                </h3>
+                                <p class="text-[13px] text-slate-600 mb-4 leading-relaxed">
+                                    Khảo sát năng lực dịch thuật đa ngôn ngữ dựa trên tập dữ liệu <span
+                                        class="font-semibold text-slate-800 font-mono">MAPLE</span> (Zhu et al., 2024)
+                                    với 4 hướng: <code>de→en, zh→en, en→de, en→zh</code>.
+                                </p>
+                                <div
+                                    class="bg-orange-50/50 border border-orange-100 rounded-lg p-3 text-[13px] text-slate-700 flex-grow mt-auto flex flex-col justify-between">
+                                    <ul class="list-disc pl-4 space-y-2 mb-2 text-[12px]">
+                                        <li>
+                                            <span class="font-semibold text-orange-800">TRANSLATION-EASY:</span>
+                                            So sánh bản dịch tốt nhất (<i>chosen</i>) và kém nhất (<i>rejected</i>) để
+                                            tránh nhiễu. <span
+                                                class="text-slate-500 font-mono text-[11px]">(&Delta;Score &ge;
+                                                0.25 hoặc 5%)</span>
+                                        </li>
+                                        <li>
+                                            <span class="font-semibold text-orange-800">TRANSLATION-HARD:</span>
+                                            Đòi hỏi phân biệt tinh tế giữa hai bản dịch có chất lượng tiệm cận.
+                                            <span class="text-slate-500 font-mono text-[11px]">(&Delta;Score &ge;
+                                                0.50 hoặc 10%)</span>
+                                        </li>
+                                        <li>
+                                            <span class="font-semibold text-orange-800">Quy mô & Đa dạng:</span>
+                                            Tạo 200 mẫu cho mỗi hướng dịch (100 cặp/tập con). Lấy mẫu ngẫu nhiên 31 câu
+                                            lệnh (prompts) từ MAPLE áp dụng vào văn bản nguồn.
+                                        </li>
+                                    </ul>
+                                    <div
+                                        class="mt-1 pt-2 border-t border-orange-200/60 text-[11px] text-orange-700/80 italic leading-tight">
+                                        *<span class="font-mono font-semibold">&Delta;Score</span>: Độ chênh lệch tuyệt
+                                        đối về điểm đánh giá thủ công (Human Score) giữa hai bản dịch.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Table 1 -->
+            <div class="slide-frame" id="slide-7">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-amber"><i class="fa-solid fa-table mr-2"></i>3. M-REWARDBENCH</div>
+                        <h1 class="slide-title">Thống kê tập dữ liệu</h1>
+                        <p class="slide-subtitle">Quy mô của M-REWARDBENCH</p>
+                    </div>
+                    <div class="flex flex-row gap-6 flex-grow items-stretch justify-center h-full">
+                        <!-- Cột Trái: Mô tả -->
+                        <div class="w-[50%] flex flex-col gap-5 justify-center">
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 shadow-sm">
+                                <h3 class="font-bold text-blue-900 text-[16px] mb-3 flex items-center">
+                                    <i class="fa-solid fa-chart-pie text-blue-500 mr-2 text-xl"></i>Quy mô dữ liệu khổng
+                                    lồ
+                                </h3>
+                                <p class="text-[14px] text-slate-700 leading-relaxed mb-3">
+                                    M-REWARDBENCH là bộ benchmark tiên phong với quy mô lên tới <strong>66,787 mẫu thử
+                                        nghiệm</strong> (instances), bao phủ <strong>23 ngôn ngữ</strong> có đặc trưng
+                                    đa dạng.
+                                </p>
+                                <p class="text-[14px] text-slate-700 leading-relaxed">
+                                    Dữ liệu được thiết kế cân bằng để vừa kiểm tra khả năng suy luận, tuân thủ an toàn
+                                    (Safety), giao tiếp (Chat) trên diện rộng, giao tiếp khó (Chat-Hard), vừa đi sâu vào
+                                    năng lực dịch thuật chuyên biệt của mô hình.
+                                </p>
+                            </div>
+
+                            <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 shadow-sm">
+                                <h3 class="font-bold text-amber-900 text-[15px] mb-2"><i
+                                        class="fa-solid fa-language text-amber-500 mr-2"></i>Đặc trưng ngôn ngữ</h3>
+                                <ul class="list-disc pl-5 text-[13.5px] text-slate-700 space-y-2">
+                                    <li>Bao quát <strong>8 hệ chữ viết</strong> (scripts - ví dụ: Latin, Cyrillic,
+                                        Arabic, Devanagari, Hangul...) và <strong>8 ngữ hệ</strong> (language families -
+                                        ví dụ: Indo-European, Sino-Tibetan, Afro-Asiatic...).</li>
+                                    <li>Phân bổ từ các ngôn ngữ giàu tài nguyên (High-resource: Tiếng Pháp, Tây Ban Nha)
+                                        đến các ngôn ngữ có nguồn tài nguyên hạn chế hơn (Mid/Low-resource: Tiếng
+                                        Indonesia, Tiếng Ả Rập, Tiếng Ukraina).</li>
+                                    <li>Riêng tác vụ Translation (400 mẫu) tập trung vào Tiếng Trung (zh) và Tiếng Đức
+                                        (de).</li>
+                                </ul>
+                            </div>
+
+                            <div class="mt-2 text-[13.5px] text-slate-600 px-2">
+                                <i class="fa-solid fa-link text-blue-500 mr-1"></i> <strong>Nguồn Dataset:</strong>
+                                <a href="https://hf.co/datasets/CohereLabsCommunity/multilingual-reward-bench"
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="text-blue-600 hover:text-blue-800 hover:underline break-all">
+                                    hf.co/datasets/CohereLabsCommunity/multilingual-reward-bench
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Cột Phải: Hình ảnh Bảng 1 -->
+                        <div class="flex flex-col justify-center items-center w-full">
+                            <div class="bg-white border border-slate-200 rounded-xl shadow-md p-1 inline-block"
+                                style="width: fit-content;">
+                                <img src="Table 1.PNG" alt="Table 1: Dataset statistics for M-REWARDBENCH"
+                                    class="max-w-full h-auto object-contain rounded">
+                            </div>
+                            <p class="text-[12px] text-center text-slate-500 mt-3 px-2 leading-snug w-[85%]">
+                                <strong>Bảng 1:</strong> Thống kê chi tiết số lượng mẫu và số ngôn ngữ cho từng hạng mục
+                                trong M-REWARDBENCH (chưa bao gồm tiếng Anh).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Experiment Details - Models -->
+            <div class="slide-frame" id="slide-8">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-flask mr-2"></i>4. Experiment Details
+                        </div>
+                        <h1 class="slide-title">4. Chi tiết thực nghiệm</h1>
+                        <p class="slide-subtitle">Lựa chọn các mô hình phần thưởng để đánh giá</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6 flex-grow pb-12">
+                        <!-- Cột Trái: Mô tả -->
+                        <div class="flex flex-col gap-4">
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 shadow-sm">
+                                <h3 class="font-bold text-blue-900 text-[14px] mb-2"><i
+                                        class="fa-solid fa-microchip mr-2"></i>Phạm vi đánh giá</h3>
+                                <p class="text-[13px] text-slate-700 leading-relaxed">
+                                    Chọn <strong>25 mô hình tiêu biểu</strong> với kích thước tham số đa dạng, dao động
+                                    từ <strong>3 đến 104 tỷ tham số</strong>. Bao gồm các loại như bên dưới.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="card-neutral border-l-4 border-purple-500 p-3">
+                                    <h3 class="font-bold text-slate-800 text-[13px] mb-1"><span class="mr-2">💬</span>RM
+                                        Tạo sinh
+                                        (Generative)</h3>
+                                    <ul class="list-disc pl-5 text-[12px] text-slate-600">
+                                        <li>LLaMa 3.1 Instruct (Dubey et al., 2024)</li>
+                                        <li>Aya Expanse (Dang et al., 2024c)</li>
+                                    </ul>
+                                </div>
+                                <div class="card-neutral border-l-4 border-blue-500 p-3">
+                                    <h3 class="font-bold text-slate-800 text-[13px] mb-1"><span class="mr-2">🔢</span>RM
+                                        Phân loại
+                                        (Classifier)</h3>
+                                    <ul class="list-disc pl-5 text-[12px] text-slate-600">
+                                        <li>Eurus RM 7B (Yuan et al., 2024a)</li>
+                                        <li>Tülu 2.5 13B RM (Ivison et al., 2024)</li>
+                                    </ul>
+                                </div>
+                                <div class="card-neutral border-l-4 border-emerald-500 p-3">
+                                    <h3 class="font-bold text-slate-800 text-[13px] mb-1"><span class="mr-2">🎯</span>RM
+                                        Ngầm (Implicit -
+                                        DPO)</h3>
+                                    <ul class="list-disc pl-5 text-[12px] text-slate-600">
+                                        <li>Zephyr 7B (Tunstall et al., 2023)</li>
+                                        <li>Tülu 2 DPO (Ivison et al., 2023)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cột Phải: Hình ảnh Bảng 6 -->
+                        <div class="flex flex-col justify-start w-full">
+                            <div class="bg-white border border-slate-200 rounded-xl shadow-md p-1.5 w-full mx-auto">
+                                <img src="Table 6.PNG" alt="Table 6: State-of-the-art models evaluated"
+                                    class="w-full h-auto object-contain rounded">
+                            </div>
+                            <p class="text-[11px] text-center text-slate-500 mt-3 px-2 leading-snug">
+                                <strong>Bảng 6:</strong> Tóm tắt các mô hình Reward Models (RMs) được sử dụng trong
+                                nghiên cứu.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 8b: Experiment Details - Metrics -->
+            <div class="slide-frame" id="slide-8b">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-calculator mr-2"></i>4. Experiment Details
+                        </div>
+                        <h1 class="slide-title">4. Chi tiết thực nghiệm (tiếp theo)</h1>
+                        <p class="slide-subtitle">Thang điểm đánh giá (Scoring metric)</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6 pb-12">
+                        <div class="card-neutral card-highlight flex flex-col justify-start">
+                            <h3 class="font-bold text-slate-800 mb-3"><i
+                                    class="fa-solid fa-bullseye text-blue-600 mr-2"></i>Độ chính xác (Accuracy Score)
+                            </h3>
+                            <p class="text-[13.5px] text-slate-600 leading-relaxed mb-3">
+                                Cho một bộ ba: <code
+                                    class="bg-slate-100 px-1 rounded">&lang;x, y<sub>c,REF</sub>, y<sub>r,REF</sub>&rang;</code>
+                            </p>
+                            <ul class="list-disc pl-5 text-[13px] text-slate-600 space-y-2 mb-3">
+                                <li><strong>x:</strong> câu lệnh (prompt)</li>
+                                <li><strong>y<sub>c,REF</sub>:</strong> câu trả lời được chọn (chosen)</li>
+                                <li><strong>y<sub>r,REF</sub>:</strong> câu trả lời bị loại (rejected)</li>
+                            </ul>
+                            <p class="text-[13.5px] text-slate-600 leading-relaxed">
+                                Thu được nhãn dự đoán <strong class="text-blue-700">y<sub>c,RM</sub></strong> từ mô hình
+                                và so sánh với nhãn tham chiếu của con người <strong
+                                    class="text-emerald-700">y<sub>c,REF</sub></strong>.
+                            </p>
+                        </div>
+                        <div class="card-neutral border-l-4 border-amber-500 flex flex-col justify-start">
+                            <h3 class="font-bold text-slate-800 mb-3"><i
+                                    class="fa-solid fa-scale-balanced text-amber-600 mr-2"></i>Chiến lược & Tổng hợp
+                                điểm</h3>
+                            <ul class="list-disc pl-5 text-[13.5px] text-slate-600 space-y-3">
+                                <li>Áp dụng nhiều chiến lược đánh giá khác nhau tùy thuộc vào loại mô hình phần thưởng
+                                    (do sự thịnh hành của các phương pháp preference tuning).</li>
+                                <li><strong>Cấu hình chuẩn</strong> (Lambert et al., 2024):
+                                    <br>Điểm tổng thể cho một ngôn ngữ = Trung bình cộng có trọng số (<i>weighted
+                                        average</i>) trên tất cả các tập con dựa trên số lượng câu lệnh.
+                                </li>
+                                <li>Điểm số cuối cùng là trung bình cộng có trọng số của các điểm thành phần.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: Table 2 -->
+            <div class="slide-frame" id="slide-9">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-emerald"><i class="fa-solid fa-square-check mr-2"></i>5. Results</div>
+                        <h1 class="slide-title">Tác động của loại RM đến hiệu suất từ tiếng Anh sang Đa ngôn ngữ</h1>
+                        <p class="slide-subtitle">Bảng xếp hạng 10 mô hình hàng đầu trên M-REWARDBENCH</p>
+                    </div>
+                    <div class="flex flex-col gap-5 pb-6 w-full">
+                        <!-- Đánh giá -->
+                        <div class="card-neutral card-highlight py-3 px-5">
+                            <h3 class="font-bold text-slate-800 text-[13px] mb-2"><i
+                                    class="fa-solid fa-chart-line text-blue-600 mr-2"></i>Nhận xét</h3>
+                            <ul
+                                class="list-disc pl-5 text-[11.5px] text-slate-700 grid grid-cols-2 gap-x-8 gap-y-3 leading-relaxed text-justify">
+                                <li><strong>Generative RMs thống trị:</strong> GPT-4 Turbo và Command R+ dẫn đầu.<span
+                                        class="text-blue-700"> Bởi vì</span> nhờ dữ liệu pre-training đa ngôn ngữ khổng
+                                    lồ, phương pháp LLM-as-a-judge duy trì được khả năng suy luận ngữ nghĩa bất chấp rào
+                                    cản ngôn ngữ.</li>
+                                <li><strong>Khoảng cách mã nguồn mở:</strong> Các mô hình độc quyền vẫn chiếm ưu thế,
+                                    nhưng mã nguồn mở (họ Llama 3) đang bám đuổi sát sao. <br><span
+                                        class="text-blue-700 font-medium">Bởi vì:</span> Sự cải tiến liên tục về chất
+                                    lượng dữ
+                                    liệu tinh chỉnh (preference tuning) đa ngôn ngữ của cộng đồng.</li>
+                                <li><strong>Sự suy giảm đa ngôn ngữ:</strong> Các mô hình sụt giảm hiệu suất lên tới
+                                    <strong>13%</strong> so với khi đánh giá tiếng Anh.<span class="text-blue-700"> Bởi
+                                        vì</span> do hạn chế ở các ngôn ngữ ít tài
+                                    nguyên và lỗi dịch thuật (nâng cao chất lượng dịch giúp tăng ~3% độ chính xác).
+                                </li>
+                                <li><strong>Phương sai (Variance) hiệu suất:</strong> Độ ổn định xuyên ngôn ngữ giữa các
+                                    mô hình có sự chênh lệch lớn.<span class="text-blue-700"> Bởi vì</span>
+                                    Generative RMs có phương sai thấp (mức giảm cao nhất ~6%), trong khi Classifier &
+                                    Implicit RMs có phương sai cao (giảm >13%) do phụ thuộc lớn vào đặc trưng ngôn ngữ.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Hình ảnh Bảng 2 -->
+                        <div class="flex flex-col justify-start w-full">
+                            <div class="bg-white border border-slate-200 rounded-xl shadow-md p-1.5 w-full mx-auto">
+                                <img src="Table 2.PNG" alt="Table 2: Top ten reward models on M-REWARDBENCH"
+                                    class="w-full h-auto object-contain rounded">
+                            </div>
+                            <p class="text-[11px] text-center text-slate-500 mt-2 px-2 leading-snug">
+                                <strong>Bảng 2:</strong> Top 10 mô hình được sắp xếp theo điểm trung bình (Avg). Các ký
+                                hiệu thể hiện: Classifier RMs, Generative RMs, Implicit RMs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: Table 3 -->
+            <div class="slide-frame" id="slide-10">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-emerald"><i class="fa-solid fa-arrow-trend-down mr-2"></i>5. Results
+                        </div>
+                        <h1 class="slide-title">Sự sụt giảm hiệu năng theo danh mục</h1>
+                        <p class="slide-subtitle">So sánh tiếng Anh vs. Đa ngôn ngữ</p>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center space-x-6 pb-8">
+                        <div class="w-1/2">
+                            <img src="Table 3.PNG"
+                                alt="Table 3: Performance drop from RewardBench (English) to M-REWARDBENCH"
+                                class="rounded shadow-md border border-slate-200">
+                            <p class="text-[11px] text-center text-slate-500 mt-2 px-2 leading-snug">
+                                <strong>Bảng 3:</strong> Sự sụt giảm hiệu suất từ RewardBench (tiếng Anh) sang
+                                M-REWARDBENCH trên tất cả các danh mục đối với top 10 mô hình trong M-REWARDBENCH.
+                            </p>
+                        </div>
+                        <div class="w-1/2">
+                            <div class="card-neutral card-alert py-5 px-6">
+                                <h3 class="font-bold text-slate-800 text-[14px] mb-4"><i
+                                        class="fa-solid fa-file-contract text-red-600 mr-2"></i>Nhận xét</h3>
+                                <div class="text-[13px] text-slate-700 space-y-4 leading-relaxed text-justify">
+                                    <p>
+                                        Sự sụt giảm hiệu suất phân hóa rất rõ rệt tùy theo từng danh mục đánh giá. Đáng
+                                        chú ý nhất, các tác vụ hội thoại tự nhiên (<strong>Chat</strong> - lấy từ
+                                        AlpacaEval
+                                        và MT-Bench, chủ yếu xoay quanh các câu hỏi mở, giao tiếp hàng ngày và yêu cầu
+                                        sự hỗ trợ thông thường) <strong>ghi nhận mức giảm sâu nhất lên đến -6.22%
+                                        </strong>. Nguyên nhân sâu xa là do nhóm tác vụ này
+                                        đòi hỏi mô hình phải nắm bắt được các sắc thái văn hóa, thành ngữ và ngữ cảnh
+                                        cục bộ – những yếu tố vốn cực kỳ khó để chuyển giao dịch qua ngôn ngữ khác.
+                                    </p>
+                                    <p>
+                                        Ngược lại, <strong>nhóm tác vụ suy luận (Reasoning) lại chứng minh được sự bền
+                                            bỉ đáng ngạc nhiên khi chỉ suy giảm nhẹ khoảng ~2.26%</strong>. Điều này có
+                                        thể được lý giải bởi bản chất của toán học và lập trình: chúng dựa trên logic
+                                        phổ quát và hệ thống ký hiệu chung, hoàn toàn không bị rào cản ngôn ngữ tác động
+                                        quá nhiều.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: Figure 2 -->
+            <div class="slide-frame" id="slide-11">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-emerald"><i class="fa-solid fa-handshake mr-2"></i>5. Results</div>
+                        <h1 class="slide-title">Sự đồng thuận nhãn giữa các ngôn ngữ</h1>
+                        <p class="slide-subtitle">Sử dụng hệ số Cohen's Kappa (&kappa;) đo lường tính nhất quán
+                            (Inter-annotator agreement)</p>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center space-x-6 pb-8">
+                        <div class="w-1/2">
+                            <img src="Figure 2.PNG" alt="Figure 2: Label agreement, as measured by Cohen’s κ"
+                                class="rounded shadow-md border border-slate-200">
+                            <p class="text-[11px] text-center text-slate-500 mt-2 px-2 leading-snug">
+                                <strong>Hình 2: (Heatmap) Ma trận tương quan Cohen's Kappa.</strong> Không có mô hình
+                                nào đạt được sự đồng thuận hoàn toàn (&kappa; = 1) giữa tiếng Anh và các ngôn ngữ khác.
+                                RMs có &kappa; cao hơn thể hiện sự nhất quán hơn đối với <i>nội dung</i> câu hỏi bất
+                                chấp sự khác biệt ngôn ngữ.<br>
+                                <strong>Thanh sai số (error bars)</strong>: được sử dụng để biểu diễn mức độ biến thiên,
+                                độ phân tán hoặc sự không chắc chắn của dữ liệu xung quanh giá trị trung bình
+                            </p>
+                        </div>
+                        <div class="w-1/2">
+                            <div class="card-neutral card-alert py-5 px-6">
+                                <h3 class="font-bold text-slate-800 text-[14px] mb-4"><i
+                                        class="fa-solid fa-magnifying-glass-chart text-red-600 mr-2"></i>Nhận xét</h3>
+                                <div class="text-[13px] text-slate-700 space-y-4 leading-relaxed text-justify">
+                                    <p>
+                                        <strong>Đo lường Độ nhất quán (Cohen's &kappa;):</strong> Biểu đồ sử dụng hệ
+                                        số &kappa; để đánh giá mức độ đồng thuận nội bộ. Chỉ số &kappa; cao chứng minh
+                                        mô hình đánh giá nhất quán dựa trên nội dung cốt lõi, ít bị ảnh hưởng bởi biến
+                                        thể ngôn ngữ học.
+                                    </p>
+                                    <p>
+                                        <strong>Nghịch lý hiệu suất - nhất quán:</strong> Hiệu suất cao không đồng
+                                        nghĩa với độ đồng thuận cao. Trực quan cho thấy cột &kappa; của Llama-3-70B vượt
+                                        trội hơn Gemma-2-9B, khẳng định tính kiên định xuyên ngôn ngữ tốt hơn dù hiệu
+                                        suất trung bình thấp hơn.(Xem ở Bảng 2)
+                                    </p>
+                                    <p>
+                                        <strong>Phân hóa kiến trúc mô hình:</strong> Nhóm mô hình tạo sinh
+                                        (Generative RMs) áp đảo với chỉ số đồng thuận cao nhất. Ngược lại, mô hình ngầm
+                                        (Implicit RMs) và phân loại (Classifier RMs) đạt chỉ số rất thấp, bộc lộ điểm
+                                        yếu khi khái quát hóa đa ngôn ngữ.
+                                    </p>
+                                    <p>
+                                        <strong>Biên độ dao động (Thanh sai số):</strong> Thanh sai số ngắn ở nhóm
+                                        Generative RMs minh chứng cho sự ổn định đồng đều trên mọi ngôn ngữ. Ngược lại,
+                                        thanh sai số kéo dài ở các nhóm còn lại phản ánh độ phân tán lớn và sự thiếu ổn
+                                        định khi ngôn ngữ đầu vào thay đổi.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 12: Figure 3 -->
+            <div class="slide-frame" id="slide-12">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-emerald"><i class="fa-solid fa-chart-bar mr-2"></i>5. Results</div>
+                        <h1 class="slide-title">Phân phối sự đồng thuận nhãn</h1>
+                        <p class="slide-subtitle">Ví dụ trên tiếng Indonesia</p>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center space-x-6 pb-8">
+                        <div class="w-1/2">
+                            <img src="Figure 3.PNG" alt="Figure 3: Distribution of label agreement"
+                                class="rounded shadow-md border border-slate-200">
+                            <p class="text-[11px] text-center text-slate-500 mt-2 px-2 leading-snug">
+                                <strong>Hình 3:</strong> Phân phối điểm &kappa; cho tiếng Indonesia.
+                                <br>
+                                - Biểu đồ phía trên (Histogram): Thể hiện phân phối mức độ đồng thuận &kappa;
+                                <br>
+                                - Biểu đồ phía dưới (Stacked Bar): Phân tích tỷ lệ đóng góp của từng hạng mục.
+                            </p>
+                        </div>
+                        <div class="w-1/2">
+                            <div class="card-neutral card-alert py-5 px-6">
+                                <h3 class="font-bold text-slate-800 text-[14px] mb-4"><i
+                                        class="fa-solid fa-magnifying-glass-chart text-red-600 mr-2"></i>Nhận xét</h3>
+                                <div class="text-[13px] text-slate-700 space-y-4 leading-relaxed text-justify">
+                                    <p>
+                                        <strong>Bất đồng tại hạng mục Chat:</strong> Phần lớn sự bất đồng xảy ra ở
+                                        hạng mục Chat (gồm AlpacaEval và MT-Bench). Hình 3 xác nhận hạng mục này tập
+                                        trung dày đặc tại vùng hệ số Cohen’s &kappa; thấp hoặc âm, phản ánh mức độ đồng
+                                        thuận yếu giữa các mô hình.
+                                    </p>
+                                    <p>
+                                        <strong>Tính ổn định của Reasoning và Safety:</strong> Các hạng mục Reasoning
+                                        và Safety có sự đồng thuận cao hơn do sở hữu sư thật khách quan, dễ kiểm
+                                        chứng. Hình 3 minh chứng điều này khi các hạng mục trên chiếm ưu thế áp đảo tại
+                                        vùng có hệ số đồng thuận cao (&kappa; > 0.6).
+                                    </p>
+                                    <p>
+                                        <strong>Tổng quan phân phối:</strong> Đa số ví dụ ghi nhận mức độ đồng thuận
+                                        từ tối thiểu đến yếu, với đỉnh dữ liệu tập trung rõ rệt tại mốc &kappa; = 0.0.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 13: Table 4 -->
+            <div class="slide-frame" id="slide-13">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-emerald"><i class="fa-solid fa-language mr-2"></i>5. Results</div>
+                        <h1 class="slide-title">Năng lực Dịch thuật (Translation Task)</h1>
+                        <p class="slide-subtitle">Khả năng đánh giá bản dịch (MAPLE subset)</p>
+                    </div>
+                    <div class="flex-grow flex flex-col items-center justify-start space-y-6 pb-4">
+                        <div class="w-full">
+                            <div class="card-neutral card-alert py-4 px-6">
+                                <h3 class="font-bold text-slate-800 text-[14px] mb-3"><i
+                                        class="fa-solid fa-magnifying-glass-chart text-red-600 mr-2"></i>Nhận xét</h3>
+                                <div class="text-[13px] text-slate-700 space-y-3 leading-relaxed text-justify">
+                                    <p>
+                                        <strong>Tác động của hướng dịch:</strong> RMs hoạt động tốt hơn khi chấm điểm
+                                        bản dịch <em>từ</em> tiếng Anh (hướng en→xx). Ở tập TRANSLATION-EASY, hiệu suất
+                                        en→xx vượt trội hơn chiều ngược lại. Sang tập TRANSLATION-HARD, xu hướng này giữ
+                                        nguyên với tiếng Trung, nhưng lại đảo chiều với tiếng Đức (việc đánh giá bản
+                                        dịch en→de trở nên khó khăn hơn de→en).
+                                    </p>
+                                    <p>
+                                        <strong>Tác động của độ khó tác vụ:</strong> Hiệu suất sụt giảm mạnh và nhất
+                                        quán khi chuyển từ tập dễ sang khó trên tất cả các cặp ngôn ngữ. Điển hình như
+                                        sự lao dốc độ chính xác của GPT-4-Turbo trên cặp en-zh. Điều này cho thấy các mô
+                                        hình vẫn đang gặp khó khăn trước sự mơ hồ ngữ cảnh (context ambiguity) và độ
+                                        phức tạp ngôn ngữ trong các kịch bản đầy thử thách.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full flex flex-col items-center">
+                            <img src="Table 4.PNG" alt="Table 4: Top ten reward models in translation task"
+                                class="rounded shadow-md border border-slate-200 max-w-[90%]">
+                            <p class="text-[11px] text-center text-slate-500 mt-3 px-8 leading-snug">
+                                <strong>Bảng 4:</strong> Điểm số trên tập con Dịch thuật. Hầu hết các RMs đánh giá tốt
+                                hơn khi dịch <i>từ tiếng Anh</i> sang ngôn ngữ khác (en→xx), và điểm số giảm rõ rệt từ
+                                tập EASY sang tập HARD.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 14: Figure 4 -->
+            <div class="slide-frame" id="slide-14">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-magnifying-glass-chart mr-2"></i>6.
+                            Analysis</div>
+                        <h1 class="slide-title">Tác động của Chất lượng Dữ liệu Dịch thuật</h1>
+                        <p class="slide-subtitle">Google Translate vs. NLLB 3.3B</p>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center space-x-6 pb-8">
+                        <div class="w-1/2">
+                            <img src="Figure 4.PNG" alt="Figure 4: Performance using NLLB vs Google Translate"
+                                class="rounded shadow-md border border-slate-200">
+                        </div>
+                        <div class="w-1/2">
+                            <div class="card-neutral card-highlight">
+                                <h3 class="font-bold text-slate-800 mb-2">Chất lượng dịch thuật ảnh hưởng đến RM</h3>
+                                <p class="text-sm text-slate-600 mb-3">
+                                    So sánh hiệu suất khi sử dụng bản dịch từ hệ thống thương mại (Google Translate) và
+                                    hệ thống mã nguồn mở <span class="font-medium text-slate-700">NLLB 3.3B (No Language
+                                        Left Behind - Costa-jussà et al., 2022)</span>.
+                                </p>
+                                <ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
+                                    <li>Hiệu suất RMs tăng từ <strong>+1% đến 3%</strong> khi sử dụng bộ dịch tự động
+                                        tốt hơn.</li>
+                                    <li><strong>Generative RMs</strong> hưởng lợi lớn nhất từ chất lượng dịch thuật.
+                                    </li>
+                                    <li>Khoảng cách năng lực trở nên rõ ràng đối với <strong>Implicit RMs</strong> (như
+                                        BTRM Qwen, Mistral DPO).</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 15: Figure 5 -->
+            <div class="slide-frame" id="slide-15">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-globe mr-2"></i>6. Analysis</div>
+                        <h1 class="slide-title">Tác động của Các chiều kích Ngôn ngữ</h1>
+                        <p class="slide-subtitle">Sự sẵn có của tài nguyên, Ngữ hệ và Văn tự</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="Figure 5.PNG" alt="Figure 5: Performance across linguistic dimensions">
+                    </div>
+                    <p class="text-xs text-center text-slate-500 mt-2"><strong>Hình 5:</strong> RMs hoạt động vượt trội
+                        ở các ngôn ngữ <i>giàu tài nguyên</i> (Class 5), các ngữ hệ <i>Indo-European & Sino-Tibetan</i>,
+                        và các bảng chữ cái <i>Latin/Cyrillic</i>.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 16: Table 5 -->
+            <div class="slide-frame" id="slide-16">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-user-check mr-2"></i>6. Analysis</div>
+                        <h1 class="slide-title">Đánh giá từ Con người (Human Evaluation)</h1>
+                        <p class="slide-subtitle">Độ tin cậy của quy trình dịch thuật</p>
+                    </div>
+                    <div class="flex-grow flex items-center justify-center space-x-6 pb-8">
+                        <div class="w-1/2">
+                            <img src="Table 5.PNG" alt="Table 5: Human evaluation results"
+                                class="rounded shadow-md border border-slate-200">
+                        </div>
+                        <div class="w-1/2">
+                            <div class="card-neutral border-l-4 border-emerald-500">
+                                <h3 class="font-bold text-slate-800 mb-2">Mức độ đồng thuận</h3>
+                                <p class="text-sm text-slate-600 mb-3">
+                                    Thực hiện đánh giá với người bản xứ (Hindi, Indonesia, Spanish).
+                                </p>
+                                <p class="text-sm text-slate-600">
+                                    Tỷ lệ đồng thuận giữa chuyên gia bản địa và nhãn gốc của RewardBench đạt mức
+                                    <strong>rất cao (94% - 98%)</strong> sau quá trình tinh lọc lỗi dịch thuật. Điều này
+                                    khẳng định quy trình dịch tự động + lọc lỗi bảo tồn được ưu tiên gốc (preference)
+                                    của RewardBench.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 17: Related Work -->
+            <div class="slide-frame" id="slide-17">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-amber"><i class="fa-solid fa-book mr-2"></i>7. Related Work</div>
+                        <h1 class="slide-title">7. Các nghiên cứu liên quan</h1>
+                        <p class="slide-subtitle">Bối cảnh học thuật của M-REWARDBENCH</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6 flex-grow pb-12">
+                        <div class="card-neutral">
+                            <h3 class="font-bold text-slate-800 mb-3">Multilingual Preference Optimization</h3>
+                            <p class="text-sm text-slate-600 mb-2">
+                                Các phương pháp căn chỉnh đa ngôn ngữ hiện tại thường dùng RM bằng tiếng Anh và dịch câu
+                                trả lời (She et al., 2024), hoặc tạo dữ liệu preference tổng hợp bằng ChatGPT (Lai et
+                                al., 2023).
+                            </p>
+                            <p class="text-sm text-slate-600 font-semibold text-rose-600">
+                                -> Chưa có nghiên cứu chuyên sâu về năng lực trực tiếp của RMs trong môi trường đa ngôn
+                                ngữ.
+                            </p>
+                        </div>
+                        <div class="card-neutral">
+                            <h3 class="font-bold text-slate-800 mb-3">Multilingual Benchmarks cho LLM</h3>
+                            <p class="text-sm text-slate-600 mb-2">
+                                Đã có MGSM, X-Fact, Global-MMLU để kiểm tra LLMs đa ngôn ngữ.
+                            </p>
+                            <p class="text-sm text-slate-600 font-semibold text-blue-600">
+                                -> M-REWARDBENCH khác biệt vì nó chuyên biệt đánh giá <strong>Reward Models</strong>,
+                                cung cấp một kho ngữ liệu song song để so sánh trực tiếp hiệu năng giữa tiếng Anh và đa
+                                ngôn ngữ.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 18: Conclusion -->
+            <div class="slide-frame" id="slide-18">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge"><i class="fa-solid fa-flag-checkered mr-2"></i>8. Conclusion</div>
+                        <h1 class="slide-title">8. Kết luận</h1>
+                        <p class="slide-subtitle">Tổng kết và Giá trị cốt lõi</p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-6 flex-grow pb-12 w-full max-w-4xl mx-auto">
+                        <div class="card-neutral card-highlight">
+                            <ul class="list-disc pl-5 text-sm text-slate-600 space-y-4">
+                                <li><strong>Xác lập chuẩn đo lường mới:</strong> M-REWARDBENCH là benchmark đa ngôn ngữ
+                                    hệ thống đầu tiên cho Reward Models, cung cấp cái nhìn thực tế về giới hạn của RMs
+                                    hiện nay (đánh giá trên 23 ngôn ngữ).</li>
+                                <li><strong>Khoảng cách đáng kể:</strong> Bằng chứng thực nghiệm cho thấy sự sụt giảm
+                                    hiệu năng mạnh mẽ khi chuyển từ tiếng Anh sang ngôn ngữ khác, đặc biệt với
+                                    Classifier RMs.</li>
+                                <li><strong>Sự phụ thuộc tài nguyên:</strong> Chất lượng bản dịch và khối lượng tài
+                                    nguyên dữ liệu của một ngôn ngữ có tương quan thuận rõ rệt với độ chính xác của
+                                    Reward Model.</li>
+                                <li><strong>Đóng góp mã nguồn mở:</strong> Dữ liệu và mã nguồn M-REWARDBENCH được công
+                                    bố rộng rãi để thúc đẩy cộng đồng xây dựng LLMs căn chỉnh tốt hơn với giá trị của
+                                    người dùng toàn cầu.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 19: Table 6 (Appendix) -->
+            <div class="slide-frame" id="slide-19">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục A</div>
+                        <h1 class="slide-title">Các mô hình được sử dụng</h1>
+                        <p class="slide-subtitle">State-of-the-art models evaluated</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="Table 6.PNG" alt="Table 6: State-of-the-art models evaluated">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 20: Table 7 (Appendix) -->
+            <div class="slide-frame" id="slide-20">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục A</div>
+                        <h1 class="slide-title">23 Ngôn ngữ trong M-REWARDBENCH</h1>
+                        <p class="slide-subtitle">Linguistic information</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="Table 7.PNG" alt="Table 7: 23 languages linguistic information">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 21: Table 8 (Appendix) -->
+            <div class="slide-frame" id="slide-21">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục B</div>
+                        <h1 class="slide-title">Dữ liệu bị loại bỏ từ RewardBench</h1>
+                        <p class="slide-subtitle">Các mẫu quá phụ thuộc vào tiếng Anh (English-focused)</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="Table 8.PNG" alt="Table 8: Removed Instances">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 22: Table 9 (Appendix) -->
+            <div class="slide-frame" id="slide-22">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục D</div>
+                        <h1 class="slide-title">Sự bất đồng với người bản xứ</h1>
+                        <p class="slide-subtitle">Ví dụ trên tiếng Indonesia</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="Table 9.PNG" alt="Table 9: Examples where RM disagrees with native human speaker">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 23: Table 10 (Appendix) -->
+            <div class="slide-frame" id="slide-23">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục E</div>
+                        <h1 class="slide-title">Kết quả đầy đủ (Full Results)</h1>
+                        <p class="slide-subtitle">Tất cả RMs trên M-REWARDBENCH</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="Table 10.PNG" alt="Table 10: All reward models evaluated">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 24: Table 11 (Appendix) -->
+            <div class="slide-frame" id="slide-24">
+                <div class="slide-standard">
+                    <div class="slide-header">
+                        <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục E</div>
+                        <h1 class="slide-title">Kết quả Dịch thuật chi tiết</h1>
+                        <p class="slide-subtitle">EASY và HARD subsets</p>
+                    </div>
+                    <div class="image-container">
+                        <img src="Table 11.PNG" alt="Table 11: All reward models in translation task">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 25: Q&A - Thank you -->
+            <div class="slide-frame" id="slide-25">
+                <div class="slide-layout-split">
+                    <div class="slide-left-panel">
+                        <div class="badge badge-emerald">
+                            <i class="fa-solid fa-circle-question mr-2"></i>Phần Thảo Luận & Hỏi Đáp
+                        </div>
+                        <h1 class="main-title text-5xl font-extrabold font-serif mb-4 text-slate-900">Q&A Session</h1>
+                        <h2 class="sub-title text-2xl text-blue-700 font-semibold mb-8">Xin chân thành cảm ơn Hội đồng
+                            và các học viên đã chú ý theo dõi!</h2>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 border border-slate-200 bg-white rounded-lg shadow-sm">
+                                <h4 class="font-bold text-slate-800 text-sm mb-1"><i
+                                        class="fa-solid fa-envelope text-blue-600 mr-2"></i>Thông tin bài báo</h4>
+                                <p class="text-xs text-slate-500">M-REWARDBENCH (ACL 2025)</p>
+                            </div>
+                            <div class="p-4 border border-slate-200 bg-white rounded-lg shadow-sm">
+                                <h4 class="font-bold text-slate-800 text-sm mb-1"><i
+                                        class="fa-solid fa-link text-red-600 mr-2"></i>Mã nguồn & Dữ liệu</h4>
+                                <p class="text-xs text-slate-500 break-all">
+                                    hf.co/datasets/CohereLabsCommunity/multilingual-reward-bench</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slide-right-panel">
+                        <div class="circle-1"></div>
+                        <div class="circle-2"></div>
+                        <div class="circle-3"></div>
+
+                        <div
+                            class="logo-circle w-40 h-40 bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-white/20 p-4 mb-6 z-10">
+                            <img src="Logo ĐH Công Nghệ Thông Tin - UIT.png" alt="Logo UIT"
+                                class="object-contain w-full h-full">
+                        </div>
+                        <div class="univ-text-top text-blue-300 font-bold uppercase tracking-wider text-xs mb-1 z-10">
+                            Trường Đại học Công nghệ Thông tin</div>
+                        <div class="univ-text-bottom text-white font-bold text-lg text-center z-10">UIT - ĐHQG TP.HCM
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTROLS -->
+            <div class="controls">
+                <button class="btn-control" onclick="prevSlide()" id="btn-prev"><i
+                        class="fa-solid fa-chevron-left mr-2"></i>Trước</button>
+                <button class="btn-control" onclick="nextSlide()" id="btn-next">Sau<i
+                        class="fa-solid fa-chevron-right ml-2"></i></button>
+                <button class="btn-control" onclick="toggleFullscreen()" title="Toàn màn hình"><i
+                        class="fa-solid fa-expand"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlideIndex = 1;
+        const totalSlides = document.querySelectorAll('.slide-frame').length;
+
+        function adjustSlideScaling() {
+            const viewport = document.getElementById('viewport');
+            const slides = document.querySelectorAll('.slide-frame');
+
+            const viewportWidth = viewport.clientWidth - 40;
+            const viewportHeight = viewport.clientHeight - 40;
+
+            const targetWidth = 1280;
+            const targetHeight = 720;
+
+            const scaleX = viewportWidth / targetWidth;
+            const scaleY = viewportHeight / targetHeight;
+            const scale = Math.min(scaleX, scaleY);
+
+            slides.forEach(slide => {
+                slide.style.transform = `scale(${scale})`;
+            });
+        }
+
+        function showSlide(index) {
+            if (index < 1) index = 1;
+            if (index > totalSlides) index = totalSlides;
+
+            currentSlideIndex = index;
+
+            document.querySelectorAll('.slide-frame').forEach((slide, idx) => {
+                if (idx + 1 === currentSlideIndex) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            const footer = document.getElementById('global-footer');
+            const counter = document.getElementById('slide-counter');
+
+            if (currentSlideIndex === 1 || currentSlideIndex === totalSlides) {
+                footer.style.opacity = '0';
+            } else {
+                footer.style.opacity = '1';
+                counter.innerText = `Trang ${currentSlideIndex} / ${totalSlides}`;
+            }
+
+            document.getElementById('btn-prev').disabled = currentSlideIndex === 1;
+            document.getElementById('btn-next').disabled = currentSlideIndex === totalSlides;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides) {
+                showSlide(currentSlideIndex + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 1) {
+                showSlide(currentSlideIndex - 1);
+            }
+        }
+
+        function toggleFullscreen() {
+            const container = document.querySelector('.presentation-container');
+            if (!document.fullscreenElement) {
+                container.requestFullscreen().catch(err => {
+                    console.error(`Error enabling fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.getElementById('viewport').addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.getElementById('viewport').addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchStartX - touchEndX > 50) {
+                nextSlide();
+            }
+            if (touchEndX - touchStartX > 50) {
+                prevSlide();
+            }
+        }
+
+        window.addEventListener('resize', adjustSlideScaling);
+        window.onload = function () {
+            adjustSlideScaling();
+            showSlide(1);
+        };
+    </script>
+</body>
+
+</html>
