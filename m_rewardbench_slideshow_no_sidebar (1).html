@@ -400,42 +400,42 @@
             margin-bottom: 12px !important;
         }
 
-        /* Adjustments for Slides 3, 5, 19 (slide-17), 20 (slide-18) */
-        #slide-3 .card-neutral,
-        #slide-3 .bg-blue-50,
-        #slide-3 .bg-purple-50,
-        #slide-3 .bg-emerald-50,
-        #slide-5 .card-neutral,
-        #slide-17 .card-neutral,
-        #slide-17 .bg-purple-50,
-        #slide-17 .bg-blue-50,
-        #slide-17 .bg-emerald-50,
+        /* Adjustments for Slides 4, 6, 20 (slide-18), 21 (slide-19) */
+        #slide-4 .card-neutral,
+        #slide-4 .bg-blue-50,
+        #slide-4 .bg-purple-50,
+        #slide-4 .bg-emerald-50,
+        #slide-6 .card-neutral,
         #slide-18 .card-neutral,
-        #slide-18 .bg-emerald-50 {
+        #slide-18 .bg-purple-50,
+        #slide-18 .bg-blue-50,
+        #slide-18 .bg-emerald-50,
+        #slide-19 .card-neutral,
+        #slide-19 .bg-emerald-50 {
             padding: 6px 10px !important;
             border-radius: 6px !important;
         }
 
-        #slide-3 .gap-4,
-        #slide-5 .gap-4,
-        #slide-17 .gap-5,
-        #slide-18 .gap-8 {
+        #slide-4 .gap-4,
+        #slide-6 .gap-4,
+        #slide-18 .gap-5,
+        #slide-19 .gap-8 {
             gap: 10px !important;
         }
 
-        #slide-17 .space-y-4> :not([hidden])~ :not([hidden]),
-        #slide-18 .space-y-4> :not([hidden])~ :not([hidden]) {
+        #slide-18 .space-y-4> :not([hidden])~ :not([hidden]),
+        #slide-19 .space-y-4> :not([hidden])~ :not([hidden]) {
             margin-top: 6px !important;
         }
 
-        #slide-3 .card-highlight,
-        #slide-5 .card-highlight,
-        #slide-17 .card-highlight,
+        #slide-4 .card-highlight,
+        #slide-6 .card-highlight,
         #slide-18 .card-highlight,
-        #slide-3 .card-alert,
-        #slide-5 .card-alert,
-        #slide-17 .card-alert,
-        #slide-18 .card-alert {
+        #slide-19 .card-highlight,
+        #slide-4 .card-alert,
+        #slide-6 .card-alert,
+        #slide-18 .card-alert,
+        #slide-19 .card-alert {
             border-left-width: 2.5px !important;
         }
     </style>
@@ -456,7 +456,7 @@
                             về Xử lý ngôn ngữ tự nhiên</span>
                         <span class="tracking-wide text-slate-500">Giảng Viên - Nguyễn Văn Kiệt</span>
                     </div>
-                    <span class="font-semibold tracking-wider text-slate-500" id="slide-counter">Trang 1 / 25</span>
+                    <span class="font-semibold tracking-wider text-slate-500" id="slide-counter">Trang 1 / 30</span>
                 </div>
 
                 <!-- SLIDE 1: Title -->
@@ -527,12 +527,65 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 2: Abstract -->
+                <!-- SLIDE 2: Authors -->
                 <div class="slide-frame" id="slide-2">
                     <div class="slide-standard">
                         <div class="slide-header">
+                            <div class="badge"><i class="fa-solid fa-users mr-2"></i>Nhóm tác giả</div>
+                            <h1 class="slide-title">Nhóm tác giả bài báo</h1>
+                            <p class="slide-subtitle">Sự kết hợp giữa các viện nghiên cứu và công ty công nghệ hàng đầu
+                            </p>
+                        </div>
+                        <div class="flex flex-col gap-4 mt-2">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="card-neutral border-l-4 border-blue-500 shadow-sm py-4">
+                                    <h3 class="font-bold text-lg text-blue-800 mb-3"><i
+                                            class="fa-solid fa-building-columns mr-2"></i>Các tổ chức tham gia</h3>
+                                    <ul class="list-disc pl-5 text-slate-600 text-[14px] leading-relaxed space-y-2">
+                                        <li><strong>Cohere / Cohere For AI:</strong> Dẫn dắt nghiên cứu (Srishti Gureja,
+                                            Sara Hooker, Marzieh Fadaee...)</li>
+                                        <li><strong>Allen Institute for AI (Ai2):</strong> Chuyên môn sâu về Alignment
+                                            và Reward Models (Lester James, Nathan Lambert).</li>
+                                        <li><strong>Meta:</strong> Đại diện bởi TS. Sebastian Ruder - chuyên gia hàng
+                                            đầu về NLP đa ngôn ngữ.</li>
+                                        <li><strong>Khác:</strong> ServiceNow và Viện KH&CN Tiên tiến Hàn Quốc (KAIST).
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-neutral border-l-4 border-purple-500 shadow-sm py-4">
+                                    <h3 class="font-bold text-lg text-purple-800 mb-3"><i
+                                            class="fa-solid fa-user-tie mr-2"></i>Các tác giả nổi bật</h3>
+                                    <ul class="list-disc pl-5 text-slate-600 text-[14px] leading-relaxed space-y-2">
+                                        <li><strong>Srishti Gureja:</strong> Đồng tác giả chính (Cohere).</li>
+                                        <li><strong>Nathan Lambert:</strong> Tác giả chính của bộ đánh giá RewardBench
+                                            bản tiếng Anh.</li>
+                                        <li><strong>Sebastian Ruder:</strong> Chuyên gia tiên phong về Transfer Learning
+                                            và Multilingual NLP.</li>
+                                        <li><strong>Sara Hooker & Marzieh Fadaee:</strong> Giám đốc C4AI và các nhà khoa
+                                            học dẫn dắt (Senior Authors).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-neutral border-l-4 border-emerald-500 shadow-sm py-4 mt-2">
+                                <h3 class="font-bold text-lg text-emerald-800 mb-2"><i
+                                        class="fa-solid fa-star mr-2"></i>Giá trị cốt lõi của nhóm</h3>
+                                <p class="text-slate-600 text-[14px] leading-relaxed">
+                                    Sự cộng hưởng giữa <strong>chuyên môn kỹ thuật sâu về Alignment</strong> (từ Ai2,
+                                    Cohere) và <strong>sự am hiểu đa dạng ngôn ngữ</strong> (từ Meta, Cohere For AI) kết
+                                    hợp cùng mô hình hợp tác mở đã giúp nhóm tiên phong giải quyết điểm mù về đánh giá
+                                    Reward Models trong môi trường đa ngôn ngữ toàn cầu.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 3: Abstract -->
+                <div class="slide-frame" id="slide-3">
+                    <div class="slide-standard">
+                        <div class="slide-header">
                             <div class="badge"><i class="fa-solid fa-compass mr-2"></i>Abstract</div>
-                            <h1 class="slide-title">Tóm tắt (Abstract)</h1>
+                            <h1 class="slide-title">Tóm tắt</h1>
                             <p class="slide-subtitle">Tổng quan về nghiên cứu và những phát hiện chính</p>
                         </div>
                         <div class="flex flex-col gap-4">
@@ -540,7 +593,7 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="card-neutral card-alert">
                                     <h3 class="font-bold text-lg text-red-700 mb-2"><i
-                                            class="fa-solid fa-circle-exclamation mr-2"></i>Vấn đề</h3>
+                                            class="fa-solid fa-circle-exclamation mr-2"></i>Đặt vấn đề</h3>
                                     <p class="text-slate-600 text-sm leading-relaxed">
                                         Các mô hình phần thưởng (Reward Models - RMs) đóng vai trò then chốt trong việc
                                         tích
@@ -583,93 +636,132 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 3: Introduction -->
-                <div class="slide-frame" id="slide-3">
+                <!-- SLIDE 4: Introduction -->
+                <div class="slide-frame" id="slide-4">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge"><i class="fa-solid fa-book-open mr-2"></i>1. Introduction</div>
                             <h1 class="slide-title">1. Giới thiệu</h1>
                             <p class="slide-subtitle">Tầm quan trọng của đánh giá đa ngôn ngữ</p>
                         </div>
-                        <div class="flex flex-col gap-8 flex-grow justify-start">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="card-neutral card-highlight flex flex-col justify-center">
-                                    <h3 class="font-bold text-slate-800 mb-2"><i
-                                            class="fa-solid fa-crosshairs text-blue-500 mr-2"></i>Vai trò của Reward
-                                        Models
-                                        (RMs)</h3>
-                                    <p class="text-[13px] text-slate-600">
-                                        RMs đóng vai trò trung tâm trong việc căn chỉnh các LLM hiện đại với ưu tiên của
-                                        con
-                                        người <em>(thông qua RLHF)</em>. Chúng đóng vai trò như một "oracle" phản ánh
-                                        các
-                                        giá trị mong muốn, giúp định hướng LLMs về độ an toàn, lập luận và khả năng tuân
-                                        thủ
-                                        chỉ thị.
+                        <div class="flex flex-col gap-2 flex-grow justify-start">
+
+                            <!-- Định nghĩa RM -->
+                            <div class="card-neutral card-highlight !p-2.5 flex items-start gap-3">
+                                <div
+                                    class="bg-blue-50 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mt-0.5 border border-blue-100">
+                                    <i class="fa-solid fa-robot"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-[13px] mb-0.5">Reward Model (RM) là gì?
+                                    </h3>
+                                    <p class="text-[12px] text-slate-600 leading-snug">
+                                        Là mô hình đóng vai trò <strong>"trọng tài"</strong>, được huấn luyện để học
+                                        <span class="text-blue-600 font-semibold">sự ưu tiên của con người (Human
+                                            Preferences)</span>. Khi AI đưa ra các câu trả lời, RM sẽ <strong>chấm
+                                            điểm</strong> xem câu nào an toàn, chính xác và hữu ích nhất.
                                     </p>
                                 </div>
-                                <div class="card-neutral card-alert flex flex-col justify-center">
-                                    <h3 class="font-bold text-slate-800 mb-2"><i
+                            </div>
+
+                            <!-- Thêm Flowchart giải thích RM -->
+                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 shadow-sm">
+                                <h3
+                                    class="font-bold text-slate-800 mb-2 text-[12px] uppercase tracking-wide text-center">
+                                    <i class="fa-solid fa-gears text-slate-500 mr-2"></i>Cơ chế hoạt động của Reward
+                                    Model (RM)
+                                </h3>
+                                <div class="flex items-center justify-between text-[11px] text-slate-700">
+                                    <div
+                                        class="bg-white border-2 border-slate-300 px-2 py-2 rounded shadow-sm text-center flex-[0.8] mx-1">
+                                        <div class="font-bold text-blue-700 text-[12px]"><i
+                                                class="fa-regular fa-comment-dots mr-1"></i>Câu hỏi (Prompt)</div>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-right text-slate-400 text-lg"></i>
+                                    <div class="flex flex-col flex-1 mx-1 gap-1.5">
+                                        <div
+                                            class="bg-white border-2 border-emerald-300 px-2 py-1.5 rounded shadow-sm text-center">
+                                            <div class="font-bold text-[11px] text-emerald-700">Câu trả lời A</div>
+                                        </div>
+                                        <div
+                                            class="bg-white border-2 border-red-300 px-2 py-1.5 rounded shadow-sm text-center">
+                                            <div class="font-bold text-[11px] text-red-700">Câu trả lời B</div>
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-right text-slate-400 text-lg"></i>
+                                    <div
+                                        class="bg-indigo-50 border-2 border-indigo-400 px-2 py-2 rounded shadow-sm text-center flex-[1.2] mx-1">
+                                        <div class="font-bold text-indigo-800 text-[12px]"><i
+                                                class="fa-solid fa-scale-balanced mr-1"></i>Reward Model</div>
+                                        <div class="text-[10px] text-indigo-600 mt-1 leading-tight">Đọc, chấm điểm &
+                                            Quyết định câu nào <b>"tốt hơn"</b></div>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-right text-slate-400 text-lg"></i>
+                                    <div
+                                        class="bg-emerald-50 border-2 border-emerald-400 px-2 py-2 rounded shadow-sm text-center flex-[0.8] mx-1">
+                                        <div class="font-bold text-emerald-800 text-[12px]"><i
+                                                class="fa-solid fa-trophy mr-1"></i>Câu ưu tiên (Chosen)</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="card-neutral card-highlight flex flex-col justify-center !p-3">
+                                    <h3 class="font-bold text-slate-800 mb-1 text-[14px]"><i
+                                            class="fa-solid fa-crosshairs text-blue-500 mr-2"></i>Vai trò của RMs</h3>
+                                    <p class="text-[12px] text-slate-600 leading-snug">
+                                        RMs đóng vai trò cốt lõi trong việc căn chỉnh LLMs với ưu tiên của con người.
+                                        Chúng đóng vai trò như một "oracle" giúp định hướng độ an toàn, lập luận và tuân
+                                        thủ chỉ thị.
+                                    </p>
+                                </div>
+                                <div class="card-neutral card-alert flex flex-col justify-center !p-3">
+                                    <h3 class="font-bold text-slate-800 mb-1 text-[14px]"><i
                                             class="fa-solid fa-triangle-exclamation text-red-500 mr-2"></i>Thực trạng
-                                        hiện
-                                        tại</h3>
-                                    <p class="text-[13px] text-slate-600">
-                                        Bất chấp việc LLMs được triển khai trên toàn cầu, các RM chủ yếu được đánh giá ở
-                                        các
-                                        ngôn ngữ giàu tài nguyên như tiếng Anh <span
-                                            class="font-medium text-blue-600">(ví
-                                            dụ: RewardBench - Lambert et al., 2024)</span>. Việc đánh giá sự nhạy bén
-                                        văn
-                                        hóa hoặc khả năng đa ngôn ngữ của RM vẫn còn bị bỏ ngỏ, gây rủi ro về độ thiên
-                                        lệch.
+                                        hiện tại</h3>
+                                    <p class="text-[12px] text-slate-600 leading-snug">
+                                        Các RM chủ yếu được đánh giá bằng <span class="font-medium text-blue-600">tiếng
+                                            Anh</span>. Việc đánh giá sự nhạy bén văn hóa hoặc đa ngôn ngữ của RM vẫn
+                                        còn bị bỏ ngỏ, gây rủi ro về độ thiên lệch.
                                     </p>
                                 </div>
                             </div>
 
                             <div class="flex flex-col justify-center">
                                 <h3
-                                    class="text-[16px] font-bold text-slate-800 mb-3 text-center uppercase tracking-wide">
-                                    3
-                                    Đóng góp học thuật cốt lõi</h3>
-                                <div class="grid grid-cols-3 gap-4">
+                                    class="text-[14px] font-bold text-slate-800 mb-2 text-center uppercase tracking-wide">
+                                    3 Đóng góp học thuật</h3>
+                                <div class="grid grid-cols-3 gap-3">
                                     <div
-                                        class="bg-blue-50 border border-blue-200 rounded-xl p-4 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
+                                        class="bg-blue-50 border border-blue-200 rounded-xl p-3 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
                                         <div
-                                            class="w-10 h-10 bg-white shadow-sm text-blue-600 rounded-full flex items-center justify-center text-xl mb-2 border border-blue-100">
+                                            class="w-8 h-8 bg-white shadow-sm text-blue-600 rounded-full flex items-center justify-center text-md mb-1.5 border border-blue-100">
                                             <i class="fa-solid fa-database"></i>
                                         </div>
-                                        <h4 class="font-bold text-blue-900 text-[15px] mb-1">Đóng góp Dữ liệu</h4>
-                                        <p class="text-[13px] text-slate-700 leading-snug">Xây dựng bộ benchmark
-                                            <strong>M-REWARDBENCH</strong> quy mô lớn cho 23 ngôn ngữ bao quát 5 nhóm
-                                            tác
-                                            vụ.
+                                        <h4 class="font-bold text-blue-900 text-[13px] mb-1">Đóng góp Dữ liệu</h4>
+                                        <p class="text-[11px] text-slate-700 leading-snug">Xây dựng benchmark
+                                            <strong>M-REWARDBENCH</strong> cho 23 ngôn ngữ bao quát 5 nhóm tác vụ.
                                         </p>
                                     </div>
                                     <div
-                                        class="bg-purple-50 border border-purple-200 rounded-xl p-4 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
+                                        class="bg-purple-50 border border-purple-200 rounded-xl p-3 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
                                         <div
-                                            class="w-10 h-10 bg-white shadow-sm text-purple-600 rounded-full flex items-center justify-center text-xl mb-2 border border-purple-100">
+                                            class="w-8 h-8 bg-white shadow-sm text-purple-600 rounded-full flex items-center justify-center text-md mb-1.5 border border-purple-100">
                                             <i class="fa-solid fa-scale-balanced"></i>
                                         </div>
-                                        <h4 class="font-bold text-purple-900 text-[15px] mb-1">Đóng góp Đo lường</h4>
-                                        <p class="text-[13px] text-slate-700 leading-snug">Đo lường toàn diện các RMs
-                                            tiên
-                                            tiến, chỉ ra sụt giảm hiệu suất nghiêm trọng (lên đến 13%) ở môi trường đa
-                                            ngôn
-                                            ngữ.</p>
+                                        <h4 class="font-bold text-purple-900 text-[13px] mb-1">Đóng góp Đo lường</h4>
+                                        <p class="text-[11px] text-slate-700 leading-snug">Chỉ ra sụt giảm hiệu suất
+                                            nghiêm trọng (lên đến 13%) ở môi trường đa ngôn ngữ.</p>
                                     </div>
                                     <div
-                                        class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
+                                        class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 shadow-sm text-center flex flex-col items-center transition-transform hover:-translate-y-1">
                                         <div
-                                            class="w-10 h-10 bg-white shadow-sm text-emerald-600 rounded-full flex items-center justify-center text-xl mb-2 border border-emerald-100">
+                                            class="w-8 h-8 bg-white shadow-sm text-emerald-600 rounded-full flex items-center justify-center text-md mb-1.5 border border-emerald-100">
                                             <i class="fa-solid fa-microscope"></i>
                                         </div>
-                                        <h4 class="font-bold text-emerald-900 text-[15px] mb-1">Đóng góp Phân tích</h4>
-                                        <p class="text-[13px] text-slate-700 leading-snug">Phân tích chuyên sâu về độ
-                                            bền
-                                            vững của RM dưới tác động của chất lượng dịch thuật, đặc trưng văn tự và ngữ
-                                            hệ.
-                                        </p>
+                                        <h4 class="font-bold text-emerald-900 text-[13px] mb-1">Đóng góp Phân tích</h4>
+                                        <p class="text-[11px] text-slate-700 leading-snug">Phân tích chuyên sâu về độ
+                                            bền vững của RM dưới tác động của dịch thuật và ngôn ngữ.</p>
                                     </div>
                                 </div>
                             </div>
@@ -677,8 +769,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 4: Figure 1 -->
-                <div class="slide-frame" id="slide-4">
+                <!-- SLIDE 5: Figure 1 -->
+                <div class="slide-frame" id="slide-5">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge"><i class="fa-solid fa-chart-line mr-2"></i>1. Introduction</div>
@@ -693,7 +785,9 @@
                             </div>
                             <div class="w-[50%] bg-blue-50 border border-blue-100 rounded-lg p-4 shadow-sm">
                                 <p class="text-[12px] text-justify text-slate-700 leading-relaxed">
-                                    <strong>Hình 1:</strong> Hiệu suất của các mô hình trên RewardBench (Tiếng Anh) so
+                                    <strong>Hình 1:</strong> <span
+                                        title="Hiệu suất (Performance) ở đây tức là tỷ lệ % số lần mô hình RM dự đoán/chọn đúng câu trả lời tốt hơn trong bài kiểm tra.">Hiệu
+                                        suất</span> của các mô hình trên RewardBench (Tiếng Anh) so
                                     với điểm trung bình trên M-REWARDBENCH (23 ngôn ngữ). Tất cả các mô hình đều hoạt
                                     động kém hơn trong môi trường đa ngôn ngữ (nằm dưới đường chéo).
                                 </p>
@@ -702,8 +796,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 5: Reward Modelling -->
-                <div class="slide-frame" id="slide-5">
+                <!-- SLIDE 6: Reward Modelling -->
+                <div class="slide-frame" id="slide-6">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge"><i class="fa-solid fa-gears mr-2"></i>2. Reward Modelling</div>
@@ -718,7 +812,10 @@
                                     Learning)</h3>
                                 <ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
                                     <li><strong>Định nghĩa:</strong> Tinh chỉnh LLM dựa trên phản hồi của con người. Nền
-                                        tảng là <span class="font-semibold text-slate-700">Bradley-Terry model</span> -
+                                        tảng là <span
+                                            class="font-semibold text-slate-700 border-b border-dotted border-slate-500 cursor-help transition-colors hover:text-slate-900"
+                                            title="Mô hình xác suất cho so sánh cặp. Trong AI, nó tính xác suất người dùng thích câu A hơn câu B dựa trên độ chênh lệch điểm phần thưởng: P(A > B) = sigmoid(Reward(A) - Reward(B)).">Bradley-Terry
+                                            model</span> -
                                         mô
                                         hình toán học giải thích đơn giản rằng: <em>Xác suất con người thích câu A hơn
                                             câu B
@@ -740,20 +837,24 @@
                                         quy
                                         (regression head) để dự đoán điểm phần thưởng vô hướng. <br><em
                                             class="text-indigo-600 text-[12px]"><i
-                                                class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i>VD:
-                                            PPO
-                                            (Proximal Policy Optimization)</em></li>
+                                                class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i>
+                                            <span class="border-b border-dotted border-indigo-400 cursor-help"
+                                                title="Proximal Policy Optimization: Thuật toán Học tăng cường (RL) giúp tối ưu hóa LLM dần dần dựa trên điểm số phần thưởng (Reward Model) một cách an toàn, tránh việc cập nhật quá gắt làm hỏng mô hình gốc.">PPO
+                                                (Proximal Policy Optimization)</span></em></li>
                                     <li><strong>Implicit RMs:</strong> Không sử dụng RM riêng biệt; tối ưu trực tiếp LLM
                                         dựa
                                         trên hàm loss. <br><em class="text-emerald-600 text-[12px]"><i
-                                                class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i>VD:
-                                            DPO
-                                            (Rafailov et al., 2024)</em></li>
+                                                class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i>
+                                            <span class="border-b border-dotted border-emerald-400 cursor-help"
+                                                title="Direct Preference Optimization: Phương pháp huấn luyện tinh chỉnh trực tiếp mô hình ngôn ngữ dựa trên dữ liệu sở thích của con người, loại bỏ hoàn toàn việc phải xây dựng Reward Model rườm rà.">DPO
+                                                (Rafailov et al., 2024)</span></em></li>
                                     <li><strong>Generative RMs:</strong> Sử dụng LLM mạnh đóng vai trò giám khảo để đưa
                                         ra
                                         đánh giá dạng văn bản. <br><em class="text-orange-600 text-[12px]"><i
-                                                class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i>Kỹ
-                                            thuật: LLM-as-a-judge (Zheng et al., 2024)</em></li>
+                                                class="fa-solid fa-arrow-turn-up fa-rotate-90 text-[10px] mr-1"></i><span
+                                                class="border-b border-dotted border-orange-400 cursor-help"
+                                                title="Kỹ thuật dùng chính một mô hình AI siêu việt (như GPT-4) đóng vai trò giám khảo để đọc, đánh giá, chấm điểm và lý giải vì sao câu trả lời này tốt hơn câu trả lời kia (thay vì tốn tiền thuê con người đánh giá).">Kỹ
+                                                thuật: LLM-as-a-judge (Zheng et al., 2024)</span></em></li>
                                 </ul>
                             </div>
                         </div>
@@ -762,210 +863,298 @@
 
 
 
-                <!-- SLIDE 6: Classifier RMs -->
-                <div class="slide-frame" id="slide-6">
+                <!-- SLIDE 7: Classifier RMs -->
+                <div class="slide-frame" id="slide-7">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge"><i class="fa-solid fa-layer-group mr-2"></i>2. Reward Modelling</div>
-                            <h1 class="slide-title">Classifier RMs – Mô Hình Phần Thưởng Tường Minh</h1>
+                            <h1 class="slide-title">Classifier RMs – Mô hình phần thưởng phân loại</h1>
                             <p class="slide-subtitle">Phương pháp căn chỉnh qua học tăng cường (RLHF)</p>
                         </div>
-                        
+
                         <div class="flex flex-col gap-3 mt-1 flex-grow">
                             <!-- Definition and Mechanism -->
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="card-neutral border-l-4 border-indigo-500 shadow-sm py-3">
-                                    <h3 class="font-bold text-indigo-800 mb-1 text-[14px]"><i class="fa-solid fa-book-open mr-2"></i>Định nghĩa</h3>
+                                    <h3 class="font-bold text-indigo-800 mb-1 text-[14px]"><i
+                                            class="fa-solid fa-book-open mr-2"></i>Định nghĩa</h3>
                                     <p class="text-[12px] text-slate-700 leading-relaxed">
-                                        Kiến trúc sử dụng một <strong>mô hình riêng biệt</strong> để học cách đánh giá dựa trên hồi quy chuỗi hoặc phân loại (theo mô hình Bradley-Terry <span class="text-indigo-600 font-semibold">[Bradley & Terry, 1952]</span>).
+                                        Kiến trúc sử dụng một <strong>mô hình riêng biệt</strong> để học cách đánh giá
+                                        dựa trên hồi quy chuỗi hoặc phân loại (theo mô hình Bradley-Terry <span
+                                            class="text-indigo-600 font-semibold">[Bradley & Terry, 1952]</span>).
                                     </p>
                                 </div>
                                 <div class="card-neutral border-l-4 border-blue-500 shadow-sm py-3">
-                                    <h3 class="font-bold text-blue-800 mb-1 text-[14px]"><i class="fa-solid fa-microchip mr-2"></i>Cơ chế hoạt động</h3>
+                                    <h3 class="font-bold text-blue-800 mb-1 text-[14px]"><i
+                                            class="fa-solid fa-microchip mr-2"></i>Cơ chế hoạt động</h3>
                                     <p class="text-[12px] text-slate-700 leading-relaxed">
-                                        Chấm điểm tường minh cặp câu trả lời, sau đó dùng điểm số làm <strong>tín hiệu tinh chỉnh</strong> mô hình ngôn ngữ ban đầu qua PPO <span class="text-blue-600 font-semibold">[Christiano et al., 2017; Ouyang et al., 2022]</span>.
+                                        Chấm điểm tường minh cặp câu trả lời, sau đó dùng điểm số làm <strong>tín hiệu
+                                            tinh chỉnh</strong> mô hình ngôn ngữ ban đầu qua PPO <span
+                                            class="text-blue-600 font-semibold">[Christiano et al., 2017; Ouyang et al.,
+                                            2022]</span>.
                                     </p>
                                 </div>
                             </div>
 
                             <!-- Flowchart -->
                             <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-3 shadow-sm my-1">
-                                <h3 class="font-bold text-indigo-900 mb-3 text-[13px] uppercase tracking-wide text-center">Sơ đồ luồng (Flowchart)</h3>
+                                <h3
+                                    class="font-bold text-indigo-900 mb-3 text-[13px] uppercase tracking-wide text-center">
+                                    Pipeline</h3>
                                 <div class="flex items-center justify-between text-[11px] text-indigo-900">
-                                    <div class="bg-white border-2 border-indigo-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-white border-2 border-indigo-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold">Dữ liệu ưu tiên</div>
-                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Cặp phản hồi<br>Chosen/Rejected</div>
+                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Cặp phản
+                                            hồi<br>Chosen/Rejected</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-indigo-400"></i>
-                                    <div class="bg-white border-2 border-indigo-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-white border-2 border-indigo-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold">Huấn luyện RM</div>
-                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Mô hình độc lập<br>Bradley-Terry</div>
+                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Mô hình
+                                            độc lập<br>Bradley-Terry</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-indigo-400"></i>
-                                    <div class="bg-indigo-600 text-white border-2 border-indigo-700 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-indigo-600 text-white border-2 border-indigo-700 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold">Xuất điểm số</div>
-                                        <div class="text-[9px] font-normal text-indigo-200 mt-0.5 leading-tight">Giá trị vô hướng<br>(Scalar Reward)</div>
+                                        <div class="text-[9px] font-normal text-indigo-200 mt-0.5 leading-tight">Giá trị
+                                            vô hướng<br>(Scalar Reward)</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-indigo-400"></i>
-                                    <div class="bg-white border-2 border-indigo-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-white border-2 border-indigo-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold">Tối ưu PPO</div>
-                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Cập nhật trọng số<br>Policy an toàn</div>
+                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Cập nhật
+                                            trọng số<br>Policy an toàn</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-indigo-400"></i>
-                                    <div class="bg-emerald-50 border-2 border-emerald-400 text-emerald-900 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-emerald-50 border-2 border-emerald-400 text-emerald-900 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold">Mô hình IFT</div>
-                                        <div class="text-[9px] font-normal text-emerald-600 mt-0.5 leading-tight">Đã căn chỉnh với<br>ưu tiên con người</div>
+                                        <div class="text-[9px] font-normal text-emerald-600 mt-0.5 leading-tight">Đã căn
+                                            chỉnh với<br>ưu tiên con người</div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Glossary -->
                             <div class="card-neutral bg-slate-50 border border-slate-200 shadow-sm py-3 px-4">
-                                <h3 class="font-bold text-slate-800 mb-2 text-[12px] uppercase tracking-wide"><i class="fa-solid fa-list-check text-indigo-500 mr-2"></i>Diễn giải quy trình</h3>
+                                <h3 class="font-bold text-slate-800 mb-2 text-[12px] uppercase tracking-wide"><i
+                                        class="fa-solid fa-list-check text-indigo-500 mr-2"></i>Diễn giải quy trình</h3>
                                 <ul class="space-y-1.5 text-[11px] text-slate-700 leading-relaxed">
-                                    <li><i class="fa-solid fa-database w-4 text-slate-400 text-center"></i> <strong class="text-indigo-800">1. Dữ liệu ưu tiên:</strong> Bắt đầu bằng tập dữ liệu chứa các cặp câu trả lời được dán nhãn Chosen/Rejected.</li>
-                                    <li><i class="fa-solid fa-gears w-4 text-slate-400 text-center"></i> <strong class="text-indigo-800">2. Huấn luyện RM:</strong> Đào tạo một mô hình đánh giá độc lập bằng phương pháp hồi quy (theo Bradley-Terry).</li>
-                                    <li><i class="fa-solid fa-calculator w-4 text-slate-400 text-center"></i> <strong class="text-indigo-800">3. Xuất điểm số:</strong> RM phân tích và trả về tín hiệu phần thưởng định lượng (scalar) cho mỗi phản hồi.</li>
-                                    <li><i class="fa-solid fa-route w-4 text-slate-400 text-center"></i> <strong class="text-indigo-800">4. Tối ưu PPO:</strong> Sử dụng học tăng cường (RL) để cập nhật policy dựa trên điểm số (an toàn, tránh lệch chuẩn).</li>
-                                    <li><i class="fa-solid fa-check-circle w-4 text-emerald-500 text-center"></i> <strong class="text-emerald-700">5. Mô hình IFT hoàn thiện:</strong> Kết quả thu được là mô hình ngôn ngữ gốc đã được căn chỉnh thành công.</li>
+                                    <li><i class="fa-solid fa-database w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-indigo-800">1. Dữ liệu ưu tiên:</strong> Bắt đầu bằng tập dữ
+                                        liệu chứa các cặp câu trả lời được dán nhãn Chosen/Rejected.</li>
+                                    <li><i class="fa-solid fa-gears w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-indigo-800">2. Huấn luyện RM:</strong> Đào tạo một mô hình đánh
+                                        giá độc lập bằng phương pháp hồi quy (theo Bradley-Terry).</li>
+                                    <li><i class="fa-solid fa-calculator w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-indigo-800">3. Xuất điểm số:</strong> RM phân tích và trả về tín
+                                        hiệu phần thưởng định lượng (scalar) cho mỗi phản hồi.</li>
+                                    <li><i class="fa-solid fa-route w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-indigo-800">4. Tối ưu PPO(Proximal Policy
+                                            Optimization):</strong> Sử dụng học tăng cường (RL)
+                                        để cập nhật policy dựa trên điểm số (an toàn, tránh lệch chuẩn).</li>
+                                    <li><i class="fa-solid fa-check-circle w-4 text-emerald-500 text-center"></i>
+                                        <strong class="text-emerald-700">5. Mô hình IFT(Instruction fine-tuned model)
+                                            hoàn thiện:</strong> Kết quả thu
+                                        được là mô hình ngôn ngữ gốc đã được căn chỉnh thành công.
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 7: Implicit RMs -->
-                <div class="slide-frame" id="slide-7">
+                <!-- SLIDE 8: Implicit RMs -->
+                <div class="slide-frame" id="slide-8">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge"><i class="fa-solid fa-ghost mr-2"></i>2. Reward Modelling</div>
-                            <h1 class="slide-title">Implicit RMs – Tối Ưu Hóa Ngầm Định (DPO)</h1>
+                            <h1 class="slide-title">Implicit RMs – Mô hình phần thưởng ngầm định (DPO)</h1>
                             <p class="slide-subtitle">Đơn giản hóa Pipeline Huấn luyện</p>
                         </div>
-                        
+
                         <div class="flex flex-col gap-3 mt-1 flex-grow">
                             <!-- Definition and Mechanism -->
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="card-neutral border-l-4 border-emerald-500 shadow-sm py-3">
-                                    <h3 class="font-bold text-emerald-800 mb-1 text-[14px]"><i class="fa-solid fa-book-open mr-2"></i>Định nghĩa</h3>
+                                    <h3 class="font-bold text-emerald-800 mb-1 text-[14px]"><i
+                                            class="fa-solid fa-book-open mr-2"></i>Định nghĩa</h3>
                                     <p class="text-[12px] text-slate-700 leading-relaxed">
-                                        Phương pháp <strong>bỏ qua hoàn toàn</strong> giai đoạn xây dựng mô hình phần thưởng trung gian (bypassing the reward modeling state).
+                                        Phương pháp <strong>bỏ qua hoàn toàn</strong> giai đoạn xây dựng mô hình phần
+                                        thưởng trung gian (bypassing the reward modeling state).
                                     </p>
                                 </div>
                                 <div class="card-neutral border-l-4 border-teal-500 shadow-sm py-3">
-                                    <h3 class="font-bold text-teal-800 mb-1 text-[14px]"><i class="fa-solid fa-microchip mr-2"></i>Cơ chế hoạt động</h3>
+                                    <h3 class="font-bold text-teal-800 mb-1 text-[14px]"><i
+                                            class="fa-solid fa-microchip mr-2"></i>Cơ chế hoạt động</h3>
                                     <p class="text-[12px] text-slate-700 leading-relaxed">
-                                        Thuật toán tối ưu hóa <strong>trực tiếp mô hình chính sách</strong> trên dữ liệu ưu tiên, biến đổi hàm toán học để mô hình tự điều chỉnh phân phối xác suất ngầm định <span class="text-teal-600 font-semibold">[Rafailov et al., 2024]</span>.
+                                        Thuật toán tối ưu hóa <strong>trực tiếp mô hình chính sách</strong> trên dữ liệu
+                                        ưu tiên, biến đổi hàm toán học để mô hình tự điều chỉnh phân phối xác suất ngầm
+                                        định <span class="text-teal-600 font-semibold">[Rafailov et al., 2024]</span>.
                                     </p>
                                 </div>
                             </div>
 
                             <!-- Flowchart -->
                             <div class="bg-emerald-50 border border-emerald-200 rounded-lg p-3 shadow-sm my-1">
-                                <h3 class="font-bold text-emerald-900 mb-3 text-[13px] uppercase tracking-wide text-center">Sơ đồ luồng (Flowchart)</h3>
+                                <h3
+                                    class="font-bold text-emerald-900 mb-3 text-[13px] uppercase tracking-wide text-center">
+                                    Pipeline</h3>
                                 <div class="flex items-center justify-between text-[11px] text-emerald-900">
-                                    <div class="bg-white border-2 border-emerald-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-white border-2 border-emerald-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold">Dữ liệu ưu tiên</div>
-                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Cặp phản hồi<br>Chosen/Rejected</div>
+                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Cặp phản
+                                            hồi<br>Chosen/Rejected</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-emerald-400"></i>
-                                    <div class="bg-slate-100 border-2 border-slate-300 border-dashed text-slate-500 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px] opacity-80">
+                                    <div
+                                        class="bg-slate-100 border-2 border-slate-300 border-dashed text-slate-500 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px] opacity-80">
                                         <div class="font-bold line-through">Tạo RM</div>
-                                        <div class="text-[9px] font-normal text-slate-400 mt-0.5 leading-tight">Bỏ qua bước huấn luyện<br>mô hình chấm điểm</div>
+                                        <div class="text-[9px] font-normal text-slate-400 mt-0.5 leading-tight">Bỏ qua
+                                            bước huấn luyện<br>mô hình chấm điểm</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-emerald-400"></i>
-                                    <div class="bg-emerald-600 text-white border-2 border-emerald-700 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-emerald-600 text-white border-2 border-emerald-700 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold">Tối ưu trực tiếp</div>
-                                        <div class="text-[9px] font-normal text-emerald-200 mt-0.5 leading-tight">Policy (DPO)<br>ngay trên LLM</div>
+                                        <div class="text-[9px] font-normal text-emerald-200 mt-0.5 leading-tight">Policy
+                                            (DPO)<br>ngay trên LLM</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-emerald-400"></i>
-                                    <div class="bg-white border-2 border-emerald-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-white border-2 border-emerald-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold">Mô hình IFT hoàn thiện</div>
-                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Đã căn chỉnh với<br>ưu tiên con người</div>
+                                        <div class="text-[9px] font-normal text-slate-500 mt-0.5 leading-tight">Đã căn
+                                            chỉnh với<br>ưu tiên con người</div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Glossary (Process Explanation) -->
                             <div class="card-neutral bg-slate-50 border border-slate-200 shadow-sm py-3 px-4">
-                                <h3 class="font-bold text-slate-800 mb-2 text-[12px] uppercase tracking-wide"><i class="fa-solid fa-list-check text-emerald-500 mr-2"></i>Diễn giải thuật ngữ & quy trình</h3>
+                                <h3 class="font-bold text-slate-800 mb-2 text-[12px] uppercase tracking-wide"><i
+                                        class="fa-solid fa-list-check text-emerald-500 mr-2"></i>Diễn giải thuật ngữ &
+                                    quy trình</h3>
                                 <ul class="space-y-2 text-[11px] text-slate-700 leading-relaxed">
-                                    <li><i class="fa-solid fa-forward-step w-4 text-slate-400 text-center"></i> <strong class="text-emerald-800">Bỏ qua bước tạo RM:</strong> Không cần tốn tài nguyên phần cứng (VRAM) để chạy song song một mô hình chấm điểm độc lập như phương pháp trên.</li>
-                                    <li><i class="fa-solid fa-brain w-4 text-slate-400 text-center"></i> <strong class="text-emerald-800">Policy (Mô hình chính sách):</strong> Tên gọi học thuật của chính bản thân Mô hình ngôn ngữ lớn (LLM) đang được huấn luyện.</li>
-                                    <li><i class="fa-solid fa-bolt w-4 text-slate-400 text-center"></i> <strong class="text-emerald-800">DPO (Direct Preference Optimization):</strong> Thuật toán điều chỉnh trực tiếp xác suất dự đoán từ của LLM. Hàm toán học ép mô hình tự động tăng xác suất sinh ra các câu giống với dữ liệu được "Chọn" và giảm xác suất sinh ra các câu bị "Loại".</li>
+                                    <li><i class="fa-solid fa-forward-step w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-emerald-800">Bỏ qua bước tạo RM:</strong> Không cần tốn tài
+                                        nguyên phần cứng (VRAM) để chạy song song một mô hình chấm điểm độc lập như
+                                        phương pháp trên.</li>
+                                    <li><i class="fa-solid fa-brain w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-emerald-800">Policy (Mô hình chính sách):</strong> Tên gọi học
+                                        thuật của chính bản thân Mô hình ngôn ngữ lớn (LLM) đang được huấn luyện.</li>
+                                    <li><i class="fa-solid fa-bolt w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-emerald-800">DPO (Direct Preference Optimization):</strong>
+                                        Thuật toán điều chỉnh trực tiếp xác suất dự đoán từ của LLM. Hàm toán học ép mô
+                                        hình tự động tăng xác suất sinh ra các câu giống với dữ liệu được "Chọn" và giảm
+                                        xác suất sinh ra các câu bị "Loại".</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 8: Generative RMs -->
-                <div class="slide-frame" id="slide-8">
+                <!-- SLIDE 9: Generative RMs -->
+                <div class="slide-frame" id="slide-9">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge"><i class="fa-solid fa-robot mr-2"></i>2. Reward Modelling</div>
-                            <h1 class="slide-title">Generative RMs – LLM Đóng Vai Trò Trọng Tài</h1>
+                            <h1 class="slide-title">Generative RMs – Mô hình phần thưởng tạo sinh</h1>
                             <p class="slide-subtitle">Cơ chế "LLM-as-a-Judge"</p>
                         </div>
-                        
+
                         <div class="flex flex-col gap-3 mt-1 flex-grow">
                             <!-- Definition and Mechanism -->
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="card-neutral border-l-4 border-orange-500 shadow-sm py-3">
-                                    <h3 class="font-bold text-orange-800 mb-1 text-[14px]"><i class="fa-solid fa-book-open mr-2"></i>Định nghĩa</h3>
+                                    <h3 class="font-bold text-orange-800 mb-1 text-[14px]"><i
+                                            class="fa-solid fa-book-open mr-2"></i>Định nghĩa</h3>
                                     <p class="text-[12px] text-slate-700 leading-relaxed">
-                                        Khai thác khả năng sinh văn bản của một mô hình ngôn ngữ lớn để đóng vai trò làm <strong>giám khảo phân xử</strong> giữa các câu trả lời <span class="text-orange-600 font-semibold">[Zheng et al., 2024]</span>.
+                                        Khai thác khả năng sinh văn bản của một mô hình ngôn ngữ lớn để đóng vai trò làm
+                                        <strong>giám khảo phân xử</strong> giữa các câu trả lời <span
+                                            class="text-orange-600 font-semibold">[Zheng et al., 2024]</span>.
                                     </p>
                                 </div>
                                 <div class="card-neutral border-l-4 border-amber-500 shadow-sm py-3">
-                                    <h3 class="font-bold text-amber-800 mb-1 text-[14px]"><i class="fa-solid fa-microchip mr-2"></i>Cơ chế hoạt động</h3>
+                                    <h3 class="font-bold text-amber-800 mb-1 text-[14px]"><i
+                                            class="fa-solid fa-microchip mr-2"></i>Cơ chế hoạt động</h3>
                                     <p class="text-[12px] text-slate-700 leading-relaxed">
-                                        Đưa mẫu phản hồi vào LLM, sau đó áp dụng chính <strong>văn bản đánh giá</strong> hoặc token phán quyết của nó làm cơ chế phản hồi tương tự như RM truyền thống <span class="text-amber-600 font-semibold">[Yuan et al., 2024b; Li et al., 2023a]</span>.
+                                        Đưa mẫu phản hồi vào LLM, sau đó áp dụng chính <strong>văn bản đánh giá</strong>
+                                        hoặc token phán quyết của nó làm cơ chế phản hồi tương tự như RM truyền thống
+                                        <span class="text-amber-600 font-semibold">[Yuan et al., 2024b; Li et al.,
+                                            2023a]</span>.
                                     </p>
                                 </div>
                             </div>
 
                             <!-- Flowchart -->
                             <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 shadow-sm my-1">
-                                <h3 class="font-bold text-orange-900 mb-3 text-[13px] uppercase tracking-wide text-center">Sơ đồ luồng (Flowchart)</h3>
+                                <h3
+                                    class="font-bold text-orange-900 mb-3 text-[13px] uppercase tracking-wide text-center">
+                                    Pipeline</h3>
                                 <div class="flex items-center justify-between text-[11px] text-orange-900">
-                                    <div class="bg-white border-2 border-orange-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-white border-2 border-orange-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold leading-tight">Prompt +<br>Cặp câu trả lời</div>
-                                        <div class="text-[9px] font-normal text-slate-500 mt-1 leading-tight">Dữ liệu đầu vào cần<br>được đánh giá</div>
+                                        <div class="text-[9px] font-normal text-slate-500 mt-1 leading-tight">Dữ liệu
+                                            đầu vào cần<br>được đánh giá</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-orange-400"></i>
-                                    <div class="bg-white border-2 border-orange-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-white border-2 border-orange-300 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold leading-tight">LLM làm<br>trọng tài</div>
-                                        <div class="text-[9px] font-normal text-slate-500 mt-1 leading-tight">Đóng vai trò giám khảo<br>để phân xử</div>
+                                        <div class="text-[9px] font-normal text-slate-500 mt-1 leading-tight">Đóng vai
+                                            trò giám khảo<br>để phân xử</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-orange-400"></i>
-                                    <div class="bg-orange-600 text-white border-2 border-orange-700 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-orange-600 text-white border-2 border-orange-700 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold leading-tight">Văn bản lập luận /<br>Token đánh giá</div>
-                                        <div class="text-[9px] font-normal text-orange-200 mt-1 leading-tight">Phán quyết bằng<br>ngôn ngữ tự nhiên</div>
+                                        <div class="text-[9px] font-normal text-orange-200 mt-1 leading-tight">Phán
+                                            quyết bằng<br>ngôn ngữ tự nhiên</div>
                                     </div>
                                     <i class="fa-solid fa-arrow-right text-orange-400"></i>
-                                    <div class="bg-amber-50 border-2 border-amber-400 text-amber-900 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
+                                    <div
+                                        class="bg-amber-50 border-2 border-amber-400 text-amber-900 px-2 py-2 rounded shadow-sm text-center flex-1 mx-1 flex flex-col justify-center min-h-[50px]">
                                         <div class="font-bold leading-tight">Cơ chế phản hồi<br>căn chỉnh</div>
-                                        <div class="text-[9px] font-normal text-amber-600 mt-1 leading-tight">Sử dụng tín hiệu để<br>tối ưu mô hình gốc</div>
+                                        <div class="text-[9px] font-normal text-amber-600 mt-1 leading-tight">Sử dụng
+                                            tín hiệu để<br>tối ưu mô hình gốc</div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Glossary (Process Explanation) -->
                             <div class="card-neutral bg-slate-50 border border-slate-200 shadow-sm py-3 px-4">
-                                <h3 class="font-bold text-slate-800 mb-2 text-[12px] uppercase tracking-wide"><i class="fa-solid fa-list-check text-orange-500 mr-2"></i>Diễn giải thuật ngữ & quy trình</h3>
+                                <h3 class="font-bold text-slate-800 mb-2 text-[12px] uppercase tracking-wide"><i
+                                        class="fa-solid fa-list-check text-orange-500 mr-2"></i>Diễn giải thuật ngữ &
+                                    quy trình</h3>
                                 <ul class="space-y-2 text-[11px] text-slate-700 leading-relaxed">
-                                    <li><i class="fa-solid fa-gavel w-4 text-slate-400 text-center"></i> <strong class="text-orange-800">LLM làm trọng tài (LLM-as-a-Judge):</strong> Dùng một mô hình có tư duy vượt trội (ví dụ: GPT-4) để đọc, phân tích và đưa ra phán quyết thay thế cho các thuật toán phân loại khô khan.</li>
-                                    <li><i class="fa-solid fa-file-lines w-4 text-slate-400 text-center"></i> <strong class="text-orange-800">Văn bản lập luận / Token đánh giá:</strong> Thay vì xuất ra một điểm số, LLM sinh ra một đoạn văn bản nhận xét bằng ngôn ngữ tự nhiên (ví dụ: "Câu A tốt hơn vì giải quyết đúng trọng tâm, trong khi câu B lan man").</li>
-                                    <li><i class="fa-solid fa-rotate-left w-4 text-slate-400 text-center"></i> <strong class="text-orange-800">Cơ chế phản hồi (Feedback Mechanism):</strong> Chuỗi nhận xét này được sử dụng làm tín hiệu hướng dẫn chi tiết, giúp mô hình gốc biết chính xác điểm sai để tự cải thiện trong các lần sinh văn bản tiếp theo.</li>
+                                    <li><i class="fa-solid fa-gavel w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-orange-800">LLM làm trọng tài (LLM-as-a-Judge):</strong> Dùng
+                                        một mô hình có tư duy vượt trội (ví dụ: GPT-4) để đọc, phân tích và đưa ra phán
+                                        quyết thay thế cho các thuật toán phân loại khô khan.</li>
+                                    <li><i class="fa-solid fa-file-lines w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-orange-800">Văn bản lập luận / Token đánh giá:</strong> Thay vì
+                                        xuất ra một điểm số, LLM sinh ra một đoạn văn bản nhận xét bằng ngôn ngữ tự
+                                        nhiên (ví dụ: "Câu A tốt hơn vì giải quyết đúng trọng tâm, trong khi câu B lan
+                                        man").</li>
+                                    <li><i class="fa-solid fa-rotate-left w-4 text-slate-400 text-center"></i> <strong
+                                            class="text-orange-800">Cơ chế phản hồi (Feedback Mechanism):</strong> Chuỗi
+                                        nhận xét này được sử dụng làm tín hiệu hướng dẫn chi tiết, giúp mô hình gốc biết
+                                        chính xác điểm sai để tự cải thiện trong các lần sinh văn bản tiếp theo.</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SLIDE 9: M-REWARDBENCH Overview -->
-                <div class="slide-frame" id="slide-9">
+                <!-- SLIDE 10: M-REWARDBENCH Overview -->
+                <div class="slide-frame" id="slide-10">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-amber"><i class="fa-solid fa-earth-americas mr-2"></i>3.
@@ -997,16 +1186,31 @@
                                         <span
                                             class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center mr-3"><i
                                                 class="fa-solid fa-layer-group"></i></span>
-                                        General Purpose(Khả năng đa mục đích)
+                                        Khả năng đa mục đích(General Purpose)
                                     </h3>
-                                    <p class="text-[13px] text-slate-600 mb-4 leading-relaxed">
-                                        Đánh giá toàn diện trên 4 phương diện cốt lõi: <strong>Chat, Chat-Hard, Safety,
-                                            Reasoning</strong>.
+                                    <p class="text-[13px] text-slate-600 mb-2 leading-relaxed">
+                                        Đánh giá toàn diện trên 4 phương diện cốt lõi:
                                     </p>
+                                    <ul class="list-none space-y-1.5 text-[12.5px] text-slate-600 mb-4 pl-1">
+                                        <li><i class="fa-regular fa-comment-dots text-blue-500 w-5"></i>
+                                            <strong>Chat:</strong> Khả năng trò chuyện cơ bản, tự nhiên.
+                                        </li>
+                                        <li><i class="fa-solid fa-comments text-blue-500 w-5"></i>
+                                            <strong>Chat-Hard:</strong> Xử lý tình huống phức tạp, nhiều ràng buộc.
+                                        </li>
+                                        <li><i class="fa-solid fa-shield-halved text-blue-500 w-5"></i>
+                                            <strong>Safety:</strong> Mức độ an toàn, từ chối nội dung độc hại.
+                                        </li>
+                                        <li><i class="fa-solid fa-brain text-blue-500 w-5"></i>
+                                            <strong>Reasoning:</strong> Tư duy logic, giải quyết vấn đề từng bước.
+                                        </li>
+                                    </ul>
                                     <div
                                         class="bg-blue-50/50 border border-blue-100 rounded-lg p-3 text-[13px] text-slate-700 flex-grow mt-auto">
                                         <ul class="list-disc pl-4 space-y-2">
-                                            <li><strong>Nguồn gốc:</strong> Chuyển ngữ từ RewardBench (tiếng Anh) sang
+                                            <li><strong>Nguồn gốc:</strong> Chuyển ngữ từ RewardBench<span
+                                                    class="text-amber-600 font-semibold">(Lambert et al., 2024)</span>
+                                                (tiếng Anh) sang
                                                 23
                                                 ngôn ngữ mục tiêu thông qua Google Translate API.</li>
                                             <li><strong>Kiểm định:</strong> Áp dụng quy trình đánh giá thủ công (Human
@@ -1027,8 +1231,9 @@
                                     </h3>
                                     <p class="text-[13px] text-slate-600 mb-4 leading-relaxed">
                                         Khảo sát năng lực dịch thuật đa ngôn ngữ dựa trên tập dữ liệu <span
-                                            class="font-semibold text-slate-800 font-mono">MAPLE</span> (Zhu et al.,
-                                        2024)
+                                            class="font-semibold text-slate-800 font-mono border-b border-dotted border-orange-400 cursor-help"
+                                            title="MAPLE (Multilingual Alignment Preference LEarning): Bộ dữ liệu chuyên biệt để đánh giá và căn chỉnh khả năng hiểu, tạo và dịch đa ngôn ngữ của mô hình.">MAPLE
+                                            (Zhu et al., 2024)</span>
                                         với 4 hướng: <code>de→en, zh→en, en→de, en→zh</code>.
                                     </p>
                                     <div
@@ -1036,31 +1241,24 @@
                                         <ul class="list-disc pl-4 space-y-2 mb-2 text-[12px]">
                                             <li>
                                                 <span class="font-semibold text-orange-800">TRANSLATION-EASY:</span>
-                                                So sánh bản dịch tốt nhất (<i>chosen</i>) và kém nhất (<i>rejected</i>)
-                                                để
-                                                tránh nhiễu. <span
-                                                    class="text-slate-500 font-mono text-[11px]">(&Delta;Score &ge;
-                                                    0.25 hoặc 5%)</span>
+                                                Đánh giá khi sự chênh lệch chất lượng giữa hai bản dịch là <strong>rõ
+                                                    ràng</strong>. Tạo ra bằng cách ghép bản dịch có điểm cao nhất (được
+                                                chọn) với bản dịch thấp điểm nhất (bị loại).
                                             </li>
                                             <li>
                                                 <span class="font-semibold text-orange-800">TRANSLATION-HARD:</span>
-                                                Đòi hỏi phân biệt tinh tế giữa hai bản dịch có chất lượng tiệm cận.
-                                                <span class="text-slate-500 font-mono text-[11px]">(&Delta;Score &ge;
-                                                    0.50 hoặc 10%)</span>
+                                                Thử thách độ nhạy bén của mô hình khi hai bản dịch có chất lượng
+                                                <strong>gần tương đương nhau</strong>. Đòi hỏi phân biệt được những khác
+                                                biệt rất tinh tế về ngữ nghĩa, văn phong.
                                             </li>
                                             <li>
                                                 <span class="font-semibold text-orange-800">Quy mô & Đa dạng:</span>
-                                                Tạo 200 mẫu cho mỗi hướng dịch (100 cặp/tập con). Lấy mẫu ngẫu nhiên 31
-                                                câu
-                                                lệnh (prompts) từ MAPLE áp dụng vào văn bản nguồn.
+                                                Mỗi chiều dịch (VD: Anh &rarr; Đức) gồm 200 tập mẫu (100 cặp Easy, 100
+                                                cặp Hard). Để mô phỏng bối cảnh thực tế, văn bản gốc được kết hợp ngẫu
+                                                nhiên với 31 dạng câu lệnh (prompts) từ MAPLE.
                                             </li>
                                         </ul>
-                                        <div
-                                            class="mt-1 pt-2 border-t border-orange-200/60 text-[11px] text-orange-700/80 italic leading-tight">
-                                            *<span class="font-mono font-semibold">&Delta;Score</span>: Độ chênh lệch
-                                            tuyệt
-                                            đối về điểm đánh giá thủ công (Human Score) giữa hai bản dịch.
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -1068,8 +1266,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 10: Table 1 -->
-                <div class="slide-frame" id="slide-10">
+                <!-- SLIDE 11: Table 1 -->
+                <div class="slide-frame" id="slide-11">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-amber"><i class="fa-solid fa-table mr-2"></i>3. M-REWARDBENCH</div>
@@ -1144,8 +1342,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 11: Experiment Details - Models -->
-                <div class="slide-frame" id="slide-11">
+                <!-- SLIDE 12: Experiment Details - Models -->
+                <div class="slide-frame" id="slide-12">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-flask mr-2"></i>4. Experiment Details
@@ -1215,8 +1413,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 12: Experiment Details - Metrics -->
-                <div class="slide-frame" id="slide-12">
+                <!-- SLIDE 13: Experiment Details - Metrics -->
+                <div class="slide-frame" id="slide-13">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-calculator mr-2"></i>4. Experiment
@@ -1266,8 +1464,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 13: Table 2 -->
-                <div class="slide-frame" id="slide-13">
+                <!-- SLIDE 14: Table 2 -->
+                <div class="slide-frame" id="slide-14">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-emerald"><i class="fa-solid fa-square-check mr-2"></i>5. Results
@@ -1329,8 +1527,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 14: Table 3 -->
-                <div class="slide-frame" id="slide-14">
+                <!-- SLIDE 15: Table 3 -->
+                <div class="slide-frame" id="slide-15">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-emerald"><i class="fa-solid fa-arrow-trend-down mr-2"></i>5. Results
@@ -1385,8 +1583,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 15: Figure 2 -->
-                <div class="slide-frame" id="slide-15">
+                <!-- SLIDE 16: Figure 2 -->
+                <div class="slide-frame" id="slide-16">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-emerald"><i class="fa-solid fa-handshake mr-2"></i>5. Results</div>
@@ -1455,8 +1653,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 16: Figure 3 -->
-                <div class="slide-frame" id="slide-16">
+                <!-- SLIDE 17: Figure 3 -->
+                <div class="slide-frame" id="slide-17">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-emerald"><i class="fa-solid fa-chart-bar mr-2"></i>5. Results</div>
@@ -1508,8 +1706,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 17: Table 4 -->
-                <div class="slide-frame" id="slide-17">
+                <!-- SLIDE 18: Table 4 -->
+                <div class="slide-frame" id="slide-18">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-emerald"><i class="fa-solid fa-language mr-2"></i>5. Results</div>
@@ -1560,8 +1758,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 18: Figure 4 -->
-                <div class="slide-frame" id="slide-18">
+                <!-- SLIDE 19: Figure 4 -->
+                <div class="slide-frame" id="slide-19">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-magnifying-glass-chart mr-2"></i>6.
@@ -1623,8 +1821,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 19: Figure 5 -->
-                <div class="slide-frame" id="slide-19">
+                <!-- SLIDE 20: Figure 5 -->
+                <div class="slide-frame" id="slide-20">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-globe mr-2"></i>6. Analysis</div>
@@ -1701,8 +1899,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 20: Table 5 -->
-                <div class="slide-frame" id="slide-20">
+                <!-- SLIDE 21: Table 5 -->
+                <div class="slide-frame" id="slide-21">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-user-check mr-2"></i>6. Analysis</div>
@@ -1776,7 +1974,8 @@
                                         <div
                                             class="bg-emerald-50 border-2 border-emerald-400 rounded-lg p-2.5 shadow-md text-center w-full relative z-20">
                                             <h4 class="font-bold text-emerald-800 text-[12px] uppercase tracking-wide">
-                                                <i class="fa-solid fa-check-double mr-1.5"></i>Tính Toán Đồng Thuận</h4>
+                                                <i class="fa-solid fa-check-double mr-1.5"></i>Tính Toán Đồng Thuận
+                                            </h4>
                                             <p class="text-[10px] text-emerald-700 mt-1 font-medium">So sánh Lựa chọn
                                                 của
                                                 Annotator<br>với Nhãn gốc của RewardBench</p>
@@ -1849,8 +2048,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 21: Related Work -->
-                <div class="slide-frame" id="slide-21">
+                <!-- SLIDE 22: Related Work -->
+                <div class="slide-frame" id="slide-22">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-amber"><i class="fa-solid fa-book mr-2"></i>7. Related Work</div>
@@ -1955,8 +2154,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 22: Conclusion -->
-                <div class="slide-frame" id="slide-22">
+                <!-- SLIDE 23: Conclusion -->
+                <div class="slide-frame" id="slide-23">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge"><i class="fa-solid fa-flag-checkered mr-2"></i>8. Conclusion</div>
@@ -2052,8 +2251,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 23: Table 6 (Appendix) -->
-                <div class="slide-frame" id="slide-23">
+                <!-- SLIDE 24: Table 6 (Appendix) -->
+                <div class="slide-frame" id="slide-24">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục A</div>
@@ -2066,8 +2265,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 24: Table 7 (Appendix) -->
-                <div class="slide-frame" id="slide-24">
+                <!-- SLIDE 25: Table 7 (Appendix) -->
+                <div class="slide-frame" id="slide-25">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục A</div>
@@ -2080,8 +2279,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 25: Table 8 (Appendix) -->
-                <div class="slide-frame" id="slide-25">
+                <!-- SLIDE 26: Table 8 (Appendix) -->
+                <div class="slide-frame" id="slide-26">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục B</div>
@@ -2094,8 +2293,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 26: Table 9 (Appendix) -->
-                <div class="slide-frame" id="slide-26">
+                <!-- SLIDE 27: Table 9 (Appendix) -->
+                <div class="slide-frame" id="slide-27">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục D</div>
@@ -2108,8 +2307,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 27: Table 10 (Appendix) -->
-                <div class="slide-frame" id="slide-27">
+                <!-- SLIDE 28: Table 10 (Appendix) -->
+                <div class="slide-frame" id="slide-28">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục E</div>
@@ -2122,8 +2321,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 28: Table 11 (Appendix) -->
-                <div class="slide-frame" id="slide-28">
+                <!-- SLIDE 29: Table 11 (Appendix) -->
+                <div class="slide-frame" id="slide-29">
                     <div class="slide-standard">
                         <div class="slide-header">
                             <div class="badge badge-purple"><i class="fa-solid fa-paperclip mr-2"></i>Phụ lục E</div>
@@ -2136,8 +2335,8 @@
                     </div>
                 </div>
 
-                <!-- SLIDE 29: Q&A - Thank you -->
-                <div class="slide-frame" id="slide-29">
+                <!-- SLIDE 30: Q&A - Thank you -->
+                <div class="slide-frame" id="slide-30">
                     <div class="slide-layout-split">
                         <div class="slide-left-panel">
                             <div class="badge badge-emerald">
